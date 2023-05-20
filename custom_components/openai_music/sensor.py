@@ -141,13 +141,13 @@ class OpenAiImageSensor(Entity):
         if img_match_prompt is not None:
             image_prompt = img_match_prompt
         else:
-            image_prompt = DEFAULT_IMAGE_TYPE
+            image_prompt = image_type
 
         ai_prompt = f"describe in a concise way a {image_prompt} image that describes the themes and lyrics of the song"
 
         headers = {"Authorization": f"Bearer {self.api_key}"}
         payload = {
-            "max_tokens": 100,
+            "max_tokens": DEFAULT_MAX_IMG_TOKENS,
             "model": DEFAULT_CHAT_MODEL,
             "temperature": DEFAULT_TEMPERATURE,
             "messages": [
@@ -177,6 +177,7 @@ class OpenAiImageSensor(Entity):
 
         image_data = data_img["data"][0]["url"]
         ai_request_time = data_img["created"]
+        # Using State to capture unique image value for possible local download
         self._state = f"{song_info} - {ai_request_time} - {image_type}"
 
         self._attributes = {
