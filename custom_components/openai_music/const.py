@@ -51,7 +51,7 @@ IMAGE_TYPES = {
     "Normal": "Normal",
     "Old Cartoon": "Old cartoon style",
     "Pablo Picasso": "Pablo Picasso style",
-    "Psychadelic": "pyschadelic",
+    "Psychedelic": "pyschedelic",
     "Salvador Dalí": "Salvador Dalí style",
     "Simpsons": "Simpsons style",
     "Tim Burton": "Tim Burton style",

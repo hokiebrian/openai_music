@@ -114,8 +114,8 @@ get_openai_image:
               value: "Old cartoon style"
             - label: Pablo Picasso
               value: "Pablo Picasso style"
-            - label: Psychadelic
-              value: "pyschadelic"
+            - label: Psychedelic
+              value: "pyschedelic"
             - label: Salvador Dalí
               value: "Salvador Dalí style"
             - label: Simpsons
