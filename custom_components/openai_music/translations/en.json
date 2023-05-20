@@ -1,0 +1,19 @@
+{
+    "config": {
+      "flow_title": "OpenAI Music Companion",
+      "step": {
+        "user": {
+          "title": "Enter your OpenAI API Key",
+          "data": {
+            "api_key": "API Key"
+          }
+        }
+      },
+      "error": {
+        "invalid_api_key": "Invalid API Key"
+      },
+      "abort": {
+        "already_configured": "This integration has already been configured"
+      }
+    }
+  }

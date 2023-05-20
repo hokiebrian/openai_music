@@ -1,0 +1,128 @@
+ask_openai:
+  name: Ask OpenAI for Song Info
+  description: Get Song Details in different flavors from OpenAI
+  fields:
+    song_info:
+      name: Song Info
+      description: Song Info
+      example: "One by Metallica"
+      required: true
+      selector: 
+        text:
+    prompt:
+      name: Prompt
+      description: Prompt
+      example: "Give me info about the song"
+      required: false
+      selector:
+        select:
+          options:
+            - label: General Song Info
+              value: "General Song Info"
+            - label: Lyric Meanings
+              value: "Lyric Meanings"
+            - label: Song Trivia
+              value: "Song Trivia"
+            - label: Songwriters
+              value: "Songwriters"
+            - label: Recording Info
+              value: "Recording Info"
+            - label: Similar Songs
+              value: "Similar Songs"
+    personality:
+      name: Personality
+      description: Personality of the response
+      example: "Record Producer"
+      required: false
+      selector:
+        select:
+          options:
+            - label: Normal
+              value: "Normal"
+            - label: Hipster
+              value: "Hipster"
+            - label: Stoner
+              value: "Stoner"
+            - label: Musician
+              value: "Musician"
+            - label: Grumpy Old Man
+              value: "Grumpy Old Man"
+            - label: Intellectual
+              value: "Intellectual"
+            - label: Pirate
+              value: "Pirate"
+            - label: Scientist
+              value: "Scientist"
+            - label: Clueless
+              value: "Clueless"
+            - label: Old English
+              value: "Old English"
+            - label: Superhero
+              value: "Superhero"
+            - label: Valley Girl
+              value: "Valley Girl"
+            - label: Karen
+              value: "Karen"
+            - label: Paranoid
+              value: "Paranoid"
+            - label: Canadian
+              value: "Canadian"
+            - label: "Hyperbole"
+              value: "Hyperbole"
+get_openai_image:
+  name: Create OpenAI Image
+  description: Create an image using a prompt
+  fields:
+    song:
+      name: Song
+      description: Song and Artists
+      example: "Ball and Biscuit by The White Stripes"
+      required: false
+      selector: 
+        text:
+    image_type:
+      name: Image Type
+      description: Image Type
+      example: "Andy Warhol"
+      required: false
+      selector:
+        select:
+          options:
+            - label: Abstract
+              value: "abstract"
+            - label: Andy Warhol
+              value: "Andy Warhol style"
+            - label: Beavis and Butthead
+              value: "Beavis and Butthead style"
+            - label: Cartoon
+              value: "cartoon"
+            - label: Frida Kahlo
+              value: "Frida Kahlo style"
+            - label: Futurama
+              value: "Futurama style"
+            - label: Futuristic
+              value: "futuristic"
+            - label: Humorous
+              value: "humorous"
+            - label: Jackson Pollock
+              value: "Jackson Pollock style"
+            - label: Modern
+              value: "modern"
+            - label: Normal
+              value: "Normal"
+            - label: Old Cartoon
+              value: "Old cartoon style"
+            - label: Pablo Picasso
+              value: "Pablo Picasso style"
+            - label: Psychadelic
+              value: "pyschadelic"
+            - label: Salvador Dalí
+              value: "Salvador Dalí style"
+            - label: Simpsons
+              value: "Simpsons style"
+            - label: Tim Burton
+              value: "Tim Burton style"
+            - label: Van Gogh
+              value: "Van Gogh"
+            - label: Yayoi Kusama
+              value: "Yayoi Kusama style"
