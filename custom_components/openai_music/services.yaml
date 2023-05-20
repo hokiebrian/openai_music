@@ -2,11 +2,18 @@ ask_openai:
   name: Ask OpenAI for Song Info
   description: Get Song Details in different flavors from OpenAI
   fields:
-    song_info:
-      name: Song Info
-      description: Song Info
-      example: "One by Metallica"
-      required: true
+    song_title:
+      name: Song Title
+      description: Song Title
+      example: "Ball and Biscuit"
+      required: false
+      selector: 
+        text:
+    song_artist:
+      name: Song Artist
+      description: Song Artist
+      example: "The White Stripes"
+      required: false
       selector: 
         text:
     prompt:
@@ -73,10 +80,17 @@ get_openai_image:
   name: Create OpenAI Image
   description: Create an image using a prompt
   fields:
-    song:
-      name: Song
-      description: Song and Artists
-      example: "Ball and Biscuit by The White Stripes"
+    song_title:
+      name: Song Title
+      description: Song Title
+      example: "Ball and Biscuit"
+      required: false
+      selector: 
+        text:
+    song_artist:
+      name: Song Artist
+      description: Song Artist
+      example: "The White Stripes"
       required: false
       selector: 
         text:

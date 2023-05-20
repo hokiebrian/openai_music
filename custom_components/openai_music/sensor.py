@@ -37,7 +37,10 @@ class OpenAiTextSensor(Entity):
     async def async_ask_openai(self, call):
         """Fetch the song info from the AI model."""
         # Connect to the OpenAI API and send the song info and personality
-        song_info = call.data.get("song_info", DEFAULT_SONG_INFO)
+        song_title = call.data.get("song_title", DEFAULT_SONG_TITLE)
+        song_artist = call.data.get("song_artist", DEFAULT_SONG_ARTIST)
+        song_info = f"{song_title} by {song_artist}"
+
         prompt = call.data.get("prompt", DEFAULT_PROMPT)
         personality = call.data.get("personality", DEFAULT_PERSONALITY)
 
@@ -127,7 +130,9 @@ class OpenAiImageSensor(Entity):
         """Fetch the song info from the AI model."""
         # Connect to the OpenAI API and get song desc and request image
 
-        song = call.data.get("song", DEFAULT_SONG_INFO)
+        song_title = call.data.get("song_title", DEFAULT_SONG_TITLE)
+        song_artist = call.data.get("song_artist", DEFAULT_SONG_ARTIST)
+        song_info = f"{song_title} by {song_artist}"
         image_type = call.data.get("image_type", DEFAULT_IMAGE_TYPE)
 
         img_prompt = {key.lower(): value for key, value in IMAGE_TYPES.items()}
@@ -146,7 +151,7 @@ class OpenAiImageSensor(Entity):
             "model": DEFAULT_CHAT_MODEL,
             "temperature": DEFAULT_TEMPERATURE,
             "messages": [
-                {"role": "user", "content": f"{ai_prompt} {song}"},
+                {"role": "user", "content": f"{ai_prompt} {song_info}"},
             ],
         }
 
@@ -172,9 +177,10 @@ class OpenAiImageSensor(Entity):
 
         image_data = data_img["data"][0]["url"]
         ai_request_time = data_img["created"]
-        self._state = song
+        self._state = f"{song_info} - {ai_request_time} - {image_type}"
 
         self._attributes = {
+            "song": song_info,
             "type": image_type,
             "image": image_data,
             "fetched": ai_request_time,

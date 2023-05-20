@@ -3,7 +3,8 @@
 DOMAIN = "openai_music"
 DEFAULT_PROMPT = "Give me info about the song"
 DEFAULT_PERSONALITY = "You are a Music Companion"
-DEFAULT_SONG_INFO = "One by Metallica"
+DEFAULT_SONG_TITLE = "One"
+DEFAULT_SONG_ARTIST = "Metallica"
 DEFAULT_CHAT_MODEL = "gpt-3.5-turbo"
 DEFAULT_MAX_TOKENS = 500
 DEFAULT_TEMPERATURE = 0.3
