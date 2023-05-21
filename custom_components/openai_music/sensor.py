@@ -1,4 +1,4 @@
-""" OpenAI Inquiry Sensor """
+""" OpenAI Inquiry Sensor and Services """
 
 import logging
 import aiohttp
@@ -21,6 +21,8 @@ async def async_setup_entry(hass: HomeAssistant, config_entry, async_add_entitie
 
 
 class OpenAiTextSensor(Entity):
+    """OpenAI Music Text Sensor"""
+
     _LOGGER = logging.getLogger(__name__)
 
     def __init__(self, config_entry):
@@ -40,6 +42,8 @@ class OpenAiTextSensor(Entity):
         song_title = call.data.get("song_title", DEFAULT_SONG_TITLE)
         song_artist = call.data.get("song_artist", DEFAULT_SONG_ARTIST)
         song_info = f"{song_title} by {song_artist}"
+
+        self._LOGGER.debug(song_info)
 
         prompt = call.data.get("prompt", DEFAULT_PROMPT)
         personality = call.data.get("personality", DEFAULT_PERSONALITY)
@@ -70,6 +74,7 @@ class OpenAiTextSensor(Entity):
                 {"role": "user", "content": f"{ai_prompt} {song_info}"},
             ],
         }
+        self._LOGGER.debug(payload)
 
         async with aiohttp.ClientSession() as session:
             response = await session.post(
@@ -111,6 +116,8 @@ class OpenAiTextSensor(Entity):
 
 
 class OpenAiImageSensor(Entity):
+    """OpenAI Image Creation"""
+
     _LOGGER = logging.getLogger(__name__)
 
     def __init__(self, config_entry):
@@ -135,6 +142,8 @@ class OpenAiImageSensor(Entity):
         song_info = f"{song_title} by {song_artist}"
         image_type = call.data.get("image_type", DEFAULT_IMAGE_TYPE)
 
+        self._LOGGER.debug(song_info)
+
         img_prompt = {key.lower(): value for key, value in IMAGE_TYPES.items()}
         img_match_prompt = img_prompt.get(image_type.lower())
 
@@ -154,6 +163,7 @@ class OpenAiImageSensor(Entity):
                 {"role": "user", "content": f"{ai_prompt} {song_info}"},
             ],
         }
+        self._LOGGER.debug(payload)
 
         async with aiohttp.ClientSession() as session:
             response = await session.post(
@@ -173,7 +183,7 @@ class OpenAiImageSensor(Entity):
             )
             data_img = await response2.json()
 
-            self._LOGGER.debug(data)
+            self._LOGGER.debug(data_img)
 
         image_data = data_img["data"][0]["url"]
         ai_request_time = data_img["created"]

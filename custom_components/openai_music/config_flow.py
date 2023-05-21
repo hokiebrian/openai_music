@@ -1,13 +1,17 @@
+""" Config Flow for OpenAI Music Companion """
 import aiohttp
 from homeassistant import config_entries
 from .const import DOMAIN
 
 
 class OpenAIMusicFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
+    """Flow Handler"""
+
     VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
 
     async def async_step_user(self, user_input=None):
+        """Get API Key"""
         errors = {}
         if user_input is not None:
             # Validate the user input against the expected schema
@@ -23,7 +27,7 @@ class OpenAIMusicFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             if not success:
                 errors[
                     "base"
-                ] = "Failed to connect to OpenAI API with the provided API key. Do you have a paid account?"
+                ] = "Failed to connect to OpenAI API with the provided API key. Do you have a pay-as-you-go account?"
 
             if not errors:
                 # The user input is valid and the API test passed, create a new config entry
