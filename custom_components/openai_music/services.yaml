@@ -102,41 +102,55 @@ get_openai_image:
       selector:
         select:
           options:
-            - label: Abstract
-              value: "abstract"
+            - label: Abstract Expressionist
+              value: "abstract expressionist style"
+            - label: Album Cover
+              value: "album cover style"
             - label: Andy Warhol
               value: "Andy Warhol style"
-            - label: Beavis and Butthead
-              value: "Beavis and Butthead style"
             - label: Cartoon
               value: "cartoon"
+            - label: Comic Book
+              value: "comic book cover style"
             - label: Frida Kahlo
               value: "Frida Kahlo style"
-            - label: Futurama
-              value: "Futurama style"
-            - label: Futuristic
-              value: "futuristic"
+            - label: Futurism
+              value: "futurism style"
+            - label: Gothic
+              value: "gothic style"
+            - label: Hyperrealism
+              value: "hyperrealism style"
             - label: Humorous
               value: "humorous"
-            - label: Jackson Pollock
-              value: "Jackson Pollock style"
+            - label: Landscape
+              value: "landscape style"
+            - label: Metaphysical
+              value: "metaphysical style"
+            - label: Minimalism
+              value: "minimalism style"
             - label: Modern
-              value: "modern"
+              value: "modern style"
             - label: Normal
               value: "Normal"
             - label: Old Cartoon
               value: "Old cartoon style"
+            - label: Oil Painting
+              value: "oil painting style"
             - label: Pablo Picasso
               value: "Pablo Picasso style"
+            - label: Pastel
+              value: "pastel style"
+            - label: Photorealism
+              value: "photorealism style"
             - label: Psychedelic
-              value: "pyschedelic"
+              value: "psychedelic style"
             - label: Salvador Dalí
               value: "Salvador Dalí style"
-            - label: Simpsons
-              value: "Simpsons style"
+            - label: Still Life
+              value: "still life style"
             - label: Tim Burton
               value: "Tim Burton style"
             - label: Van Gogh
-              value: "Van Gogh"
+              value: "Van Gogh style"
             - label: Yayoi Kusama
               value: "Yayoi Kusama style"
