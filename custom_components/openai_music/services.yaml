@@ -28,12 +28,12 @@ ask_openai:
               value: "General Song Info"
             - label: Lyric Meanings
               value: "Lyric Meanings"
+            - label: Recording Info
+              value: "Recording Info"
             - label: Song Trivia
               value: "Song Trivia"
             - label: Songwriters
               value: "Songwriters"
-            - label: Recording Info
-              value: "Recording Info"
             - label: Similar Songs
               value: "Similar Songs"
     personality:
@@ -44,38 +44,38 @@ ask_openai:
       selector:
         select:
           options:
-            - label: Normal
-              value: "Normal"
-            - label: Hipster
-              value: "Hipster"
-            - label: Stoner
-              value: "Stoner"
-            - label: Musician
-              value: "Musician"
+            - label: Canadian
+              value: "Canadian"
+            - label: Clueless
+              value: "Clueless"
             - label: Grumpy Old Man
               value: "Grumpy Old Man"
+            - label: Hipster
+              value: "Hipster"
             - label: Intellectual
               value: "Intellectual"
+            - label: Karen
+              value: "Karen"
+            - label: Hyperbole
+              value: "Hyperbole"
+            - label: Musician
+              value: "Musician"
+            - label: Normal
+              value: "Normal"
+            - label: Old English
+              value: "Old English"
+            - label: Paranoid
+              value: "Paranoid"
             - label: Pirate
               value: "Pirate"
             - label: Scientist
               value: "Scientist"
-            - label: Clueless
-              value: "Clueless"
-            - label: Old English
-              value: "Old English"
+            - label: Stoner
+              value: "Stoner"
             - label: Superhero
               value: "Superhero"
             - label: Valley Girl
               value: "Valley Girl"
-            - label: Karen
-              value: "Karen"
-            - label: Paranoid
-              value: "Paranoid"
-            - label: Canadian
-              value: "Canadian"
-            - label: "Hyperbole"
-              value: "Hyperbole"
 get_openai_image:
   name: Create OpenAI Image
   description: Create an image using a prompt
