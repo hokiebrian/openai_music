@@ -9,6 +9,8 @@
 
 This provides two services to enhance your music listening experience. 
 
+<img src="/images/loap.jpg" width=30%>
+
 ## Prerequisites
 
 **IMPORTANT** - you need to have a "pay-as-you-go" OpenAI Account and API Key. This is different than the "Plus" account. 
@@ -52,17 +54,17 @@ Select from a variety of image profile types (Abstract, Gothic, Vintage, Tim Bur
 
 ### Usage
 The services have predefined items, populated in 3 select entities (or in the Services Tab as well). You can use these to call the services or feed your own if you so desire. 
-I'd suggest using a Markdown card to easily display the infomation (examples below). 
+I'd suggest using a Markdown card to easily display the information (examples below). 
 This can be used in automations or scripts, triggered manually or when the song changes on your media player. Use a script to feed song_title and song_artist to the service along with the state values of the select entities to get your info or image. 
 
 ### Tips and Troubleshooting
 - Do you listen to a lot of recently released music? This might not be the best tool for you today. The training data ends in September 2021. You won't get "errors" necessarily, and the tool will attempt to stick with the process for the artist, even if the song is a more recent one and it doesn't know anything about it.
 - The OpenAI API is not "new", but the volume of requests is. It's sluggish. Expect 3-10 seconds for responses.
-- Cost parameters - These service calls will cost you money. The service is capped at 500 tokens per text request and 200 tokens + one 1024x1024 image per image request. As noted above, the costs are $0.02 per 10,000 tokens and $0.02 per image. When you sign up for the pay-as-you-go account, you get $18 in credits. 
+- Cost parameters - These service calls will cost you money. The service is capped at 500 tokens per text request and 200 tokens + one 1024x1024 image per image request. As noted above, the costs are $0.02 per 10,000 tokens and $0.02 per image. When you sign up for the pay-as-you-go account, you get $18 in credits. A *typical* text response is about 250-350 tokens and a *typical* metadata request for image creation is 100-150 tokens. YMMV.
 - Example costs: If you listen to 100 songs a day, and you automate a text query, the *worst case* would be $0.10 / day.
 - Example costs: If you listen to 100 songs a day, and automate an image for every song, the *worst case* would be $2.00 / day for images, $0.04 / day for the image metadata. 
 - There are retries in the code if the API doesn't respond. It will retry two times and then fail, and put an entry in the home assistant log. It is not an endless loop to prevent runaway costs.
-- YMMV! Even the same exact query will produce very different images. That is intentional, the "adventure" settings for the tool are turned up slightly to get variability in the responses. 
+- Even the same exact query will produce very different images. That is intentional, the "adventure" settings for the tool are turned up slightly to get variability in the responses. 
 - Have fun with it - it's a ton of data, find what works best for you. I particularly enjoy the "Clueless" personality, it creates a lot of fun text. I am also pleased with the Tim Burton image profile. Depending on the song you feed it, there are some fascinating images generated. 
 
 ### How does this work?
@@ -84,7 +86,7 @@ This simple card is just a grid card with an entities card for the select entiti
 
 <img src="/images/general-clueless.jpg" width=30%>
 
-- Call `openai_music.get_openai_image` with Physchedelic Option:
+- Call `openai_music.get_openai_image` with Psychedelic Option:
 
 <img src="/images/psychedelic.jpg" width=30%>
 
