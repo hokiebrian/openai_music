@@ -42,7 +42,6 @@ class OpenAiTextSensor(Entity):
         song_title = call.data.get("song_title", DEFAULT_SONG_TITLE)
         song_artist = call.data.get("song_artist", DEFAULT_SONG_ARTIST)
         song_info = f"{song_title} by {song_artist}"
-        self._attributes = {}
 
         self._LOGGER.debug(song_info)
 
@@ -91,7 +90,6 @@ class OpenAiTextSensor(Entity):
                 song_data = data["choices"][0]["message"]["content"].strip()
                 token_count = data["usage"]
                 ai_request_time = data["created"]
-                self._state = song_info
 
                 self._attributes = {
                     "info": song_data,
@@ -99,7 +97,7 @@ class OpenAiTextSensor(Entity):
                     "fetched": ai_request_time,
                     "request": payload,
                 }
-
+                self._state = song_info
                 self.async_write_ha_state()
                 break
 
@@ -159,7 +157,6 @@ class OpenAiImageSensor(Entity):
         song_artist = call.data.get("song_artist", DEFAULT_SONG_ARTIST)
         song_info = f"{song_title} by {song_artist}"
         image_type = call.data.get("image_type", DEFAULT_IMAGE_TYPE)
-        self._attributes = {}
 
         self._LOGGER.debug(song_info)
 
@@ -211,8 +208,6 @@ class OpenAiImageSensor(Entity):
 
                 image_data = data_img["data"][0]["url"]
                 ai_request_time = data_img["created"]
-                # Using State to capture unique image value for possible local download
-                self._state = f"{song_info} - {ai_request_time} - {image_type}"
 
                 self._attributes = {
                     "song": song_info,
@@ -221,6 +216,8 @@ class OpenAiImageSensor(Entity):
                     "fetched": ai_request_time,
                     "desc": song_data,
                 }
+                # Using State to capture unique image value for possible local download
+                self._state = f"{song_info} - {ai_request_time} - {image_type}"
                 self.async_write_ha_state()
                 break
 
