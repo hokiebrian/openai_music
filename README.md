@@ -11,6 +11,8 @@ This provides two services to enhance your music listening experience.
 
 <img src="/images/loap.jpg" width=30%>
 
+Scroll Down for examples!
+
 ## Prerequisites
 
 **IMPORTANT** - you need to have a "pay-as-you-go" OpenAI Account and API Key. This is different than the "Plus" account. 
