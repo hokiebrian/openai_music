@@ -65,6 +65,8 @@ This can be used in automations or scripts, triggered manually or when the song 
 - Have fun with it - it's a lot of data, find what works best for you. I particularly enjoy the "Clueless" personality. That creates a lot of fun text. I am also pleased with the Tim Burton image profile. Depending on the song you feed it, there are some fascinating images generated. 
 
 ### Examples
+This simple card is just a grid card with an entities card for the select entities, a row of buttons that have tap_actions defined for script/service calls and a Markdown Card showing the values of the sensor. 
+
 - Call `openai_music.ask_openai` with General Song Info and Normal Personality:
 
 <img src="/images/general-normal.jpg" width=30%>
