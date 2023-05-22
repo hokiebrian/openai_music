@@ -1,6 +1,7 @@
 """ OpenAI Inquiry Sensor and Services """
 
 import logging
+import asyncio
 import aiohttp
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import Entity
@@ -106,6 +107,8 @@ class OpenAiTextSensor(Entity):
                     "An error occurred while fetching OpenAI data: %s", str(e)
                 )
                 retry_count += 1
+                await session.close()
+                await asyncio.sleep(1)
 
                 if retry_count <= MAX_RETRIES:
                     self._LOGGER.debug("Retrying the OpenAI request...")
@@ -113,6 +116,8 @@ class OpenAiTextSensor(Entity):
                     self._LOGGER.error(
                         "Maximum retries reached. Aborting the OpenAI request."
                     )
+                    self._LOGGER.error(response2)
+                    self._LOGGER.error(data)
 
     @property
     def name(self):
@@ -225,7 +230,10 @@ class OpenAiImageSensor(Entity):
                 self._LOGGER.error(
                     "An error occurred while fetching OpenAI data: %s", str(e)
                 )
+
                 retry_count += 1
+                await session.close()
+                await asyncio.sleep(1)
 
                 if retry_count <= MAX_RETRIES:
                     self._LOGGER.debug("Retrying the OpenAI request...")
@@ -233,6 +241,8 @@ class OpenAiImageSensor(Entity):
                     self._LOGGER.error(
                         "Maximum retries reached. Aborting the OpenAI request."
                     )
+                    self._LOGGER.error(response2)
+                    self._LOGGER.error(data)
 
     @property
     def name(self):
