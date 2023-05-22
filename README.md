@@ -46,3 +46,14 @@ Basically it is $0.02 per image and $0.02 per 10,000 "tokens", which is roughly 
 ### Usage
 The services have predefined items, populated in 3 select entities. You can use these to call the services or feed your own if you so desire. 
 I'd suggest using a Markdown card to easily display the infomation (examples below).
+
+### Examples
+
+<img src="/images/general-normal.jpg" width=30%>
+<img src="/images/trivia.jpg" width=30%>
+<img src="/images/psychedelic.jpg" width=30%>
+<img src="/images/general-clueless.jpg" width=30%>
+<img src="/images/oil.jpg" width=30%>
+<img src="/images/photorealism.jpg" width=30%>
+
+
