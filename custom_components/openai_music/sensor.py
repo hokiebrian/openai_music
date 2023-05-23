@@ -105,6 +105,7 @@ class OpenAiTextSensor(Entity):
                 break
 
             except Exception as e:
+                """The OpenAI API is not 100% reliable"""
                 self._LOGGER.error(
                     "An error occurred while fetching OpenAI data: %s", str(e)
                 )
@@ -202,6 +203,7 @@ class OpenAiImageSensor(Entity):
                     )
                     data = await response.json()
                     song_data = data["choices"][0]["message"]["content"].strip()
+                    token_count_img = data["usage"]
 
                     payload_img = {
                         "prompt": song_data,
@@ -226,6 +228,7 @@ class OpenAiImageSensor(Entity):
                     "image": image_data,
                     "fetched": ai_request_time,
                     "desc": song_data,
+                    "token_count": token_count_img,
                 }
                 # Using State to capture unique image value for possible local download
                 self._state = f"{song_info} - {ai_request_time} - {image_type}"
@@ -233,6 +236,7 @@ class OpenAiImageSensor(Entity):
                 break
 
             except Exception as e:
+                """The OpenAI API is not 100% reliable"""
                 self._LOGGER.error(
                     "An error occurred while fetching OpenAI data: %s", str(e)
                 )
