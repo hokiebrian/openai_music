@@ -1,9 +1,10 @@
+"""Select Entities for OpenAI Music Companion"""
 from homeassistant.components.select import SelectEntity
 from .const import IMAGE_TYPES, PROMPTS, PERSONALITIES
 
 
 async def async_setup_entry(hass, config, async_add_entities):
-    # Create and add the select entities
+    """Create and add the select entities"""
     async_add_entities(
         [InfoSelectEntity(), PersonalitySelectEntity(), ImageSelectEntity()]
     )
@@ -11,6 +12,8 @@ async def async_setup_entry(hass, config, async_add_entities):
 
 class InfoSelectEntity(SelectEntity):
     """Select Info type to request."""
+
+    _attr_icon = "mdi:chat-question"
 
     def __init__(self):
         self._state = "Select"
@@ -38,6 +41,8 @@ class InfoSelectEntity(SelectEntity):
 class PersonalitySelectEntity(SelectEntity):
     """Select OpenAI Personality."""
 
+    _attr_icon = "mdi:tooltip-account"
+
     def __init__(self):
         self._state = "Select"
         self._attr_options = sorted([key for key, value in PERSONALITIES.items()])
@@ -63,6 +68,8 @@ class PersonalitySelectEntity(SelectEntity):
 
 class ImageSelectEntity(SelectEntity):
     """Select Image Creation Profile."""
+
+    _attr_icon = "mdi:palette"
 
     def __init__(self):
         self._state = "Select"

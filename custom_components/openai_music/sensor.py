@@ -12,6 +12,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass: HomeAssistant, config_entry, async_add_entities):
+    """Setup Sensors"""
     sensors = [
         OpenAiTextSensor(config_entry),
         OpenAiImageSensor(config_entry),
@@ -25,6 +26,7 @@ class OpenAiTextSensor(Entity):
     """OpenAI Music Text Sensor"""
 
     _LOGGER = logging.getLogger(__name__)
+    _attr_icon = "mdi:information-slab-box"
 
     def __init__(self, config_entry):
         self.api_key = config_entry.data[CONF_API_KEY]
@@ -116,8 +118,8 @@ class OpenAiTextSensor(Entity):
                     self._LOGGER.error(
                         "Maximum retries reached. Aborting the OpenAI request."
                     )
-                    self._LOGGER.error(response2)
-                    self._LOGGER.error(data)
+                    self._LOGGER.debug(response)
+                    self._LOGGER.debug(data)
 
     @property
     def name(self):
@@ -140,6 +142,7 @@ class OpenAiImageSensor(Entity):
     """OpenAI Image Creation"""
 
     _LOGGER = logging.getLogger(__name__)
+    _attr_icon = "mdi:multimedia"
 
     def __init__(self, config_entry):
         self.api_key = config_entry.data[CONF_API_KEY]
@@ -173,7 +176,10 @@ class OpenAiImageSensor(Entity):
         else:
             image_prompt = image_type
 
-        ai_prompt = f"describe in a concise way a {image_prompt} image that describes the themes, lyrics and artist style of the song"
+        ai_prompt = (
+            f"describe in a concise way a {image_prompt} "
+            "image that describes the themes, lyrics and artist style of the song"
+        )
 
         headers = {"Authorization": f"Bearer {self.api_key}"}
         payload = {
@@ -241,8 +247,8 @@ class OpenAiImageSensor(Entity):
                     self._LOGGER.error(
                         "Maximum retries reached. Aborting the OpenAI request."
                     )
-                    self._LOGGER.error(response2)
-                    self._LOGGER.error(data)
+                    self._LOGGER.debug(response)
+                    self._LOGGER.debug(data)
 
     @property
     def name(self):

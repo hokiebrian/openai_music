@@ -1,6 +1,8 @@
 """ Config Flow for OpenAI Music Companion """
 import aiohttp
+import voluptuous as vol
 from homeassistant import config_entries
+from homeassistant.helpers import config_validation as cv
 from .const import DOMAIN
 
 
@@ -25,10 +27,10 @@ class OpenAIMusicFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             success = await self.test_openai_api_key(api_key)
 
             if not success:
-                errors[
-                    "base"
-                ] = "Failed to connect to OpenAI API with the provided API key. Do you have a pay-as-you-go account?"
-
+                errors["base"] = (
+                    "Failed to connect to OpenAI API with the provided API key. "
+                    "Do you have a pay-as-you-go account?"
+                )
             if not errors:
                 # The user input is valid and the API test passed, create a new config entry
                 await self.async_set_unique_id(user_input["api_key"][:6])
@@ -61,7 +63,5 @@ class OpenAIMusicFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
     @property
     def schema(self):
-        from homeassistant.helpers import config_validation as cv
-        import voluptuous as vol
-
+        """Schema Definition"""
         return vol.Schema({vol.Required("api_key"): cv.string})
