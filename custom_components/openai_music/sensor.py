@@ -91,7 +91,7 @@ class OpenAiTextSensor(Entity):
                     self._LOGGER.debug(data)
 
                 song_data = data["choices"][0]["message"]["content"].strip()
-                token_count = data["usage"]
+                token_count = data["usage"]["total_tokens"]
                 ai_request_time = data["created"]
 
                 self._attributes = {
@@ -113,7 +113,7 @@ class OpenAiTextSensor(Entity):
                 )
                 retry_count += 1
                 await session.close()
-                await asyncio.sleep(1)
+                await asyncio.sleep(0.5)
 
                 if retry_count <= MAX_RETRIES:
                     self._LOGGER.debug("Retrying the OpenAI request...")
@@ -205,7 +205,7 @@ class OpenAiImageSensor(Entity):
                     )
                     data = await response.json()
                     song_data = data["choices"][0]["message"]["content"].strip()
-                    token_count_img = data["usage"]
+                    token_count_img = data["usage"]["total_tokens"]
 
                     payload_img = {
                         "prompt": song_data,
@@ -245,7 +245,7 @@ class OpenAiImageSensor(Entity):
 
                 retry_count += 1
                 await session.close()
-                await asyncio.sleep(1)
+                await asyncio.sleep(0.5)
 
                 if retry_count <= MAX_RETRIES:
                     self._LOGGER.debug("Retrying the OpenAI request...")
