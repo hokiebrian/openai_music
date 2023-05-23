@@ -99,6 +99,8 @@ class OpenAiTextSensor(Entity):
                     "tokens": token_count,
                     "fetched": ai_request_time,
                     "request": payload,
+                    "prompt": prompt,
+                    "personality": personality,
                 }
                 self._state = song_info
                 self.async_write_ha_state()
@@ -178,7 +180,7 @@ class OpenAiImageSensor(Entity):
             image_prompt = image_type
 
         ai_prompt = (
-            f"describe in a concise way a {image_prompt} "
+            f"Describe in a concise way a {image_prompt} "
             "image that describes the themes, lyrics and artist style of the song"
         )
 
@@ -228,7 +230,7 @@ class OpenAiImageSensor(Entity):
                     "image": image_data,
                     "fetched": ai_request_time,
                     "desc": song_data,
-                    "token_count": token_count_img,
+                    "tokens": token_count_img,
                 }
                 # Using State to capture unique image value for possible local download
                 self._state = f"{song_info} - {ai_request_time} - {image_type}"
