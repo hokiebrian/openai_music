@@ -70,8 +70,8 @@ This can be used in automations or scripts, triggered manually or when the song 
 - Have fun with it - it's a ton of data, find what works best for you. I particularly enjoy the "Clueless" personality, it creates a lot of fun text. I am also pleased with the Tim Burton image profile. Depending on the song you feed it, there are some fascinating images generated. 
 
 ### How does this work?
-- Using the OpenAI API and the gpt-3.5-turbo model, a tuned request is made based on input paramters that are built into a specific prompt. There are subtle elements to the prompt that make this more accurate than what you might see on the web tool. The images are created by a two-step process, a text-based query that is then fed into the image creation engine. 
-- I chose OpenAI as the platform for this because their API is the most straightfoward. In my subjective experience, the data from OpenAI is much more accurate and user friendly than the other AI platforms out there. Image creation is good with OpenAI, but you'll inevitably get a few stinkers every now and then. 
+- Using the OpenAI API and the gpt-3.5-turbo model, a tuned request is made based on input parameters that are built into a specific prompt. There are subtle elements to the prompt that make this more accurate than what you might see on the web tool. The images are created by a two-step process, a text-based query that is then fed into the image creation engine. 
+- I chose OpenAI as the platform for this because their API is the most straightforward. In my subjective experience, the data from OpenAI is much more accurate and user friendly than the other AI platforms out there. Image creation is good with OpenAI, but you'll inevitably get a few stinkers every now and then. 
 
 ### Examples
 This simple card is just a grid card with an entities card for the select entities, a row of buttons that have tap_actions defined for script/service calls and a Markdown Card showing the values of the sensor. 
@@ -92,7 +92,7 @@ This simple card is just a grid card with an entities card for the select entiti
 
 <img src="/images/psychedelic.jpg" width=30%>
 
-- Call `openai_music.get_openai_image` with Oil Paining Option:
+- Call `openai_music.get_openai_image` with Oil Painting Option:
 
 <img src="/images/oil.jpg" width=30%>
 
