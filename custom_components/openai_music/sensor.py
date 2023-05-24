@@ -180,7 +180,7 @@ class OpenAiImageSensor(Entity):
             image_prompt = image_type
 
         ai_prompt = (
-            f"Describe in a concise way a {image_prompt} "
+            f"Describe in a moderately concise way a {image_prompt} "
             "image for the Song that would reflect the lyrical themes, "
             "lyrical content and the band's style for an AI image generator."
         )
