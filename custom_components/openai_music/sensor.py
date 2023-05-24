@@ -181,7 +181,8 @@ class OpenAiImageSensor(Entity):
 
         ai_prompt = (
             f"Describe in a concise way a {image_prompt} "
-            "image that would depict the lyrical themes, lyrics and artist style for an AI image generator "
+            "image for the Song that would reflect the lyrical themes, "
+            "lyrical content and the band's style for an AI image generator."
         )
 
         headers = {"Authorization": f"Bearer {self.api_key}"}
