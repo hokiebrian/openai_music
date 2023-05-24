@@ -181,7 +181,7 @@ class OpenAiImageSensor(Entity):
 
         ai_prompt = (
             f"Describe in a concise way a {image_prompt} "
-            "image that describes the themes, lyrics and artist style of the song"
+            "image that would depict the lyrical themes, lyrics and artist style for an AI image generator "
         )
 
         headers = {"Authorization": f"Bearer {self.api_key}"}
@@ -190,7 +190,7 @@ class OpenAiImageSensor(Entity):
             "model": DEFAULT_CHAT_MODEL,
             "temperature": DEFAULT_TEMPERATURE,
             "messages": [
-                {"role": "user", "content": f"{ai_prompt} {song_info}"},
+                {"role": "user", "content": f"{ai_prompt} Song: {song_info}"},
             ],
         }
         self._LOGGER.debug(payload)
