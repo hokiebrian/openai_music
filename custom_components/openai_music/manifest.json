@@ -7,6 +7,7 @@
     "documentation": "https://www.github.com/hokiebrian/openai_music",
     "integration_type": "service",
     "iot_class": "cloud_polling",
+    "issue_tracker": "https://github.com/hokiebrian/openai_music/issues",
     "requirements": [],
-    "version": "0.9.5"
+    "version": "0.9.6"
   }
