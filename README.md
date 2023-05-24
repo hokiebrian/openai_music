@@ -9,7 +9,7 @@
 
 This provides two services to enhance your music listening experience. 
 
-<img src="/images/loap.jpg" width=30%>
+![loap](https://github.com/hokiebrian/openai_music/assets/64511748/6a8eefc0-edee-4e67-b83c-837d5cedb62d)
 
 Scroll Down for examples!
 
@@ -78,29 +78,29 @@ This simple card is just a grid card with an entities card for the select entiti
 
 - Call `openai_music.ask_openai` with General Song Info and Normal Personality:
 
-<img src="/images/general-normal.jpg" width=30%>
+![general-normal](https://github.com/hokiebrian/openai_music/assets/64511748/7a70f57f-932a-4f27-8414-d3f02084d946)
 
 - Call `openai_music.ask_openai` with Song Trivia and Normal Personality:
 
-<img src="/images/trivia.jpg" width=30%>
+![trivia](https://github.com/hokiebrian/openai_music/assets/64511748/ea681587-ea3f-477b-8840-dde803f99e06)
 
 - Call `openai_music.ask_openai` with General Song Info and Clueless Personality:
 
-<img src="/images/general-clueless.jpg" width=30%>
+![general-clueless](https://github.com/hokiebrian/openai_music/assets/64511748/d980c112-36bc-4377-a099-c3d1943b9eb6)
 
 - Call `openai_music.get_openai_image` with Psychedelic Option:
 
-<img src="/images/psychedelic.jpg" width=30%>
+![psychedelic](https://github.com/hokiebrian/openai_music/assets/64511748/2cc8a194-c082-47b7-9c05-b5d457f38770)
 
 - Call `openai_music.get_openai_image` with Oil Painting Option:
 
-<img src="/images/oil.jpg" width=30%>
+![oil](https://github.com/hokiebrian/openai_music/assets/64511748/78602e70-35e4-4a6b-89c5-7572f5428a7c)
 
 - Call `openai_music.get_openai_image` with Photorealism Option:
 
-<img src="/images/photorealism.jpg" width=30%>
+![photorealism](https://github.com/hokiebrian/openai_music/assets/64511748/21d03f0e-d403-4373-8474-76b086a239bf)
 
 - Call `openai_music.get_openai_image` with Steampunk Option:
 
-<img src="/images/steampunk.jpg" width=30%>
+![steampunk](https://github.com/hokiebrian/openai_music/assets/64511748/99148c2a-3e4f-4413-8e9c-f34e0921cfab)
 
