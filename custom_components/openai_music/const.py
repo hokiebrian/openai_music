@@ -11,11 +11,10 @@ DEFAULT_MAX_IMG_TOKENS = 250
 DEFAULT_TEMPERATURE = 0.3
 DEFAULT_IMG_TEMPERATURE = 0.1
 DEFAULT_TOP_P = 1.0
+DEFAULT_IMG_TOP_P = 1.0
 DEFAULT_IMAGE_TYPE = "normal"
 DEFAULT_IMAGE_RESOLUTION = "1024x1024"
 ERROR_IMG = "https://brands.home-assistant.io/openai_music/icon@2x.png"
-# API_URL = "https://api.openai.com/v1/chat/completions"
-# IMAGE_API_URL = "https://api.openai.com/v1/images/generations"
 MAX_RETRIES = 2
 PERSONALITIES = {
     "Normal": "Answer like a Music Expert",
@@ -48,6 +47,7 @@ IMAGE_TYPES = {
     "Album Cover": "album cover style",
     "Andy Warhol": "Andy Warhol style",
     "Anime": "anime style",
+    "Black and White": "black and white photograph style",
     "Cartoon": "cartoon",
     "Collage": "collage style",
     "Comic Book": "comic book cover style",
@@ -57,12 +57,12 @@ IMAGE_TYPES = {
     "Gothic": "gothic style",
     "Hyperrealism": "hyperrealism style",
     "Humorous": "humorous",
-    "Landscape": "landscape style",
+    "Landscape": "non-cartoon natural landscape style",
     "Metaphysical": "metaphysical style",
     "Minimalism": "minimalism style",
     "Modern": "modern style",
     "Normal": "Normal",
-    "Old Cartoon": "Old cartoon style",
+    "Old Cartoon": "Old timey cartoon style",
     "Oil Painting": "oil paining style",
     "Pablo Picasso": "Pablo Picasso style",
     "Pastel": "bright pastel colors style",
@@ -73,7 +73,7 @@ IMAGE_TYPES = {
     "Still Life": "still life style",
     "Tim Burton": "Tim Burton style",
     "Van Gogh": "Van Gogh style",
-    "Vintage": "vintage style",
+    "Vintage": "vintage photograph style",
     "Whimsical": "whimsical style",
     "Yayoi Kusama": "Yayoi Kusama style",
 }

@@ -103,54 +103,68 @@ get_openai_image:
         select:
           options:
             - label: Abstract Expressionist
-              value: "abstract expressionist style"
+              value: "Abstract Expressionist"
             - label: Album Cover
-              value: "album cover style"
+              value: "Album Cover"
             - label: Andy Warhol
-              value: "Andy Warhol style"
+              value: "Andy Warhol"
+            - label: Anime
+              value: "Anime"
+            - label: Black and White
+              value: "Black and White"
             - label: Cartoon
-              value: "cartoon"
+              value: "Cartoon"
+            - label: Collage
+              value: "Collage"
             - label: Comic Book
-              value: "comic book cover style"
+              value: "Comic Book"
+            - label: Cyberpunk
+              value: "Cyberpunk"
             - label: Frida Kahlo
-              value: "Frida Kahlo style"
+              value: "Frida Kahlo"
             - label: Futurism
-              value: "futurism style"
+              value: "Futurism"
             - label: Gothic
-              value: "gothic style"
+              value: "Gothic"
             - label: Hyperrealism
-              value: "hyperrealism style"
+              value: "Hyperrealism"
             - label: Humorous
-              value: "humorous"
+              value: "Humorous"
             - label: Landscape
-              value: "landscape style"
+              value: "Landscape"
             - label: Metaphysical
-              value: "metaphysical style"
+              value: "Metaphysical"
             - label: Minimalism
-              value: "minimalism style"
+              value: "Minimalism"
             - label: Modern
-              value: "modern style"
+              value: "Modern"
             - label: Normal
               value: "Normal"
             - label: Old Cartoon
-              value: "Old cartoon style"
+              value: "Old Cartoon"
             - label: Oil Painting
-              value: "oil painting style"
+              value: "Oil Painting"
             - label: Pablo Picasso
-              value: "Pablo Picasso style"
+              value: "Pablo Picasso"
             - label: Pastel
-              value: "pastel style"
+              value: "Pastel"
             - label: Photorealism
-              value: "photorealism style"
+              value: "Photorealism"
             - label: Psychedelic
-              value: "psychedelic style"
+              value: "Psychedelic"
             - label: Salvador Dalí
-              value: "Salvador Dalí style"
+              value: "Salvador Dalí"
+            - label: Steampunk
+              value: "Steampunk"
             - label: Still Life
-              value: "still life style"
+              value: "Still Life"
             - label: Tim Burton
-              value: "Tim Burton style"
+              value: "Tim Burton"
             - label: Van Gogh
-              value: "Van Gogh style"
+              value: "Van Gogh"
+            - label: Vintage
+              value: "Vintage"
+            - label: Whimsical
+              value: "Whimdsical"
             - label: Yayoi Kusama
-              value: "Yayoi Kusama style"
+              value: "Yayoi Kusama"
