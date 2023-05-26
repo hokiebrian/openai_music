@@ -12,8 +12,9 @@ DEFAULT_TEMPERATURE = 0.3
 DEFAULT_TOP_P = 1.0
 DEFAULT_IMAGE_TYPE = "normal"
 DEFAULT_IMAGE_RESOLUTION = "1024x1024"
-API_URL = "https://api.openai.com/v1/chat/completions"
-IMAGE_API_URL = "https://api.openai.com/v1/images/generations"
+ERROR_IMG = "https://brands.home-assistant.io/openai_music/icon@2x.png"
+# API_URL = "https://api.openai.com/v1/chat/completions"
+# IMAGE_API_URL = "https://api.openai.com/v1/images/generations"
 MAX_RETRIES = 2
 PERSONALITIES = {
     "Normal": "Answer like a Music Expert",

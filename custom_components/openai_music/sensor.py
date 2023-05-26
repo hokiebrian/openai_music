@@ -1,8 +1,10 @@
 """ OpenAI Inquiry Sensor and Services """
 
 import logging
-import asyncio
-import aiohttp
+import time
+import openai
+from openai import error
+from aiohttp import ClientSession
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import Entity
 from homeassistant.const import CONF_API_KEY
@@ -32,6 +34,7 @@ class OpenAiTextSensor(Entity):
         self.api_key = config_entry.data[CONF_API_KEY]
         self._state = None
         self._attributes = {}
+        openai.api_key = self.api_key
 
     async def async_added_to_hass(self):
         self.hass.services.async_register(DOMAIN, "ask_openai", self.async_ask_openai)
@@ -41,7 +44,6 @@ class OpenAiTextSensor(Entity):
 
     async def async_ask_openai(self, call):
         """Fetch the song info from the AI model."""
-        retry_count = 0
         song_title = call.data.get("song_title", DEFAULT_SONG_TITLE)
         song_artist = call.data.get("song_artist", DEFAULT_SONG_ARTIST)
         song_info = f"{song_title} by {song_artist}"
@@ -67,62 +69,51 @@ class OpenAiTextSensor(Entity):
         else:
             ai_personality = f"Answer as a {personality}"
 
-        headers = {"Authorization": f"Bearer {self.api_key}"}
-        payload = {
-            "max_tokens": DEFAULT_MAX_TOKENS,
-            "model": DEFAULT_CHAT_MODEL,
-            "temperature": DEFAULT_TEMPERATURE,
-            "messages": [
-                {"role": "system", "content": ai_personality},
-                {"role": "user", "content": f"{ai_prompt} {song_info}"},
-            ],
-        }
-        self._LOGGER.debug(payload)
+        model = DEFAULT_CHAT_MODEL
+        temperature = DEFAULT_TEMPERATURE
+        messages = [
+            {"role": "system", "content": ai_personality},
+            {"role": "user", "content": f"{ai_prompt} {song_info}"},
+        ]
+        max_tokens = DEFAULT_MAX_TOKENS
+        temperature = DEFAULT_TEMPERATURE
 
-        while retry_count <= MAX_RETRIES:
-            try:
-                async with aiohttp.ClientSession() as session:
-                    response = await session.post(
-                        API_URL,
-                        headers=headers,
-                        json=payload,
-                    )
-                    data = await response.json()
-                    self._LOGGER.debug(data)
+        self._LOGGER.debug(messages)
 
-                song_data = data["choices"][0]["message"]["content"].strip()
-                token_count = data["usage"]["total_tokens"]
-                ai_request_time = data["created"]
+        openai.aiosession.set(ClientSession())
 
-                self._attributes = {
-                    "info": song_data,
-                    "tokens": token_count,
-                    "fetched": ai_request_time,
-                    "request": payload,
-                    "prompt": prompt,
-                    "personality": personality,
-                }
-                self._state = song_info
-                self.async_write_ha_state()
-                break
+        try:
+            data = await openai.ChatCompletion.acreate(
+                model=model,
+                messages=messages,
+                max_tokens=max_tokens,
+                temperature=temperature,
+            )
 
-            except Exception as e:
-                """The OpenAI API is not 100% reliable"""
-                self._LOGGER.error(
-                    "An error occurred while fetching OpenAI data: %s", str(e)
-                )
-                retry_count += 1
-                await session.close()
-                await asyncio.sleep(0.5)
+            self._LOGGER.debug(data)
 
-                if retry_count <= MAX_RETRIES:
-                    self._LOGGER.debug("Retrying the OpenAI request...")
-                else:
-                    self._LOGGER.error(
-                        "Maximum retries reached. Aborting the OpenAI request."
-                    )
-                    self._LOGGER.debug(response)
-                    self._LOGGER.debug(data)
+            song_data = data["choices"][0]["message"]["content"].strip()
+            token_count = data["usage"]["total_tokens"]
+            ai_request_time = data["created"]
+
+            self._attributes = {
+                "info": song_data,
+                "tokens": token_count,
+                "fetched": ai_request_time,
+                "request": messages,
+                "prompt": prompt,
+                "personality": personality,
+            }
+
+            self._state = song_info
+
+        except error.OpenAIError as err:
+            self._LOGGER.error(err)
+            self._LOGGER.debug(prompt)
+            self._state = f"Error: {err}"[:254]
+
+        await openai.aiosession.get().close()
+        self.async_write_ha_state()
 
     @property
     def name(self):
@@ -162,7 +153,6 @@ class OpenAiImageSensor(Entity):
 
     async def async_get_openai_image(self, call):
         """Fetch the song info from the AI model."""
-        retry_count = 0
 
         song_title = call.data.get("song_title", DEFAULT_SONG_TITLE)
         song_artist = call.data.get("song_artist", DEFAULT_SONG_ARTIST)
@@ -185,78 +175,74 @@ class OpenAiImageSensor(Entity):
             "lyrical content and the band's style for an AI image generator."
         )
 
-        headers = {"Authorization": f"Bearer {self.api_key}"}
-        payload = {
-            "max_tokens": DEFAULT_MAX_IMG_TOKENS,
-            "model": DEFAULT_CHAT_MODEL,
-            "temperature": DEFAULT_TEMPERATURE,
-            "messages": [
-                {"role": "system", "content": ai_prompt},
-                {"role": "user", "content": f"Song: {song_info}"},
-            ],
-        }
-        self._LOGGER.debug(payload)
+        model = DEFAULT_CHAT_MODEL
+        temperature = DEFAULT_TEMPERATURE
+        messages = [
+            {"role": "system", "content": ai_prompt},
+            {"role": "user", "content": f"Song: {song_info}"},
+        ]
+        max_tokens = DEFAULT_MAX_IMG_TOKENS
+        temperature = DEFAULT_TEMPERATURE
 
-        while retry_count <= MAX_RETRIES:
-            try:
-                async with aiohttp.ClientSession() as session:
-                    response = await session.post(
-                        API_URL,
-                        headers=headers,
-                        json=payload,
-                    )
-                    data = await response.json()
-                    song_data = data["choices"][0]["message"]["content"].strip()
-                    token_count_img = data["usage"]["total_tokens"]
+        self._LOGGER.debug(messages)
 
-                    payload_img = {
-                        "prompt": song_data,
-                        "size": DEFAULT_IMAGE_RESOLUTION,
-                    }
+        openai.aiosession.set(ClientSession())
 
-                    response2 = await session.post(
-                        IMAGE_API_URL,
-                        headers=headers,
-                        json=payload_img,
-                    )
-                    data_img = await response2.json()
+        try:
+            data = await openai.ChatCompletion.acreate(
+                model=model,
+                messages=messages,
+                max_tokens=max_tokens,
+                temperature=temperature,
+            )
 
-                    self._LOGGER.debug(data_img)
+            self._LOGGER.debug(data)
 
-                image_data = data_img["data"][0]["url"]
-                ai_request_time = data_img["created"]
+            song_data = data["choices"][0]["message"]["content"].strip()
+            token_count_img = data["usage"]["total_tokens"]
 
-                self._attributes = {
-                    "song": song_info,
-                    "type": image_type,
-                    "image": image_data,
-                    "fetched": ai_request_time,
-                    "desc": song_data,
-                    "tokens": token_count_img,
-                }
-                # Using State to capture unique image value for possible local download
-                self._state = f"{song_info} - {ai_request_time} - {image_type}"
-                self.async_write_ha_state()
-                break
+            prompt = song_data
+            size = DEFAULT_IMAGE_RESOLUTION
 
-            except Exception as e:
-                """The OpenAI API is not 100% reliable"""
-                self._LOGGER.error(
-                    "An error occurred while fetching OpenAI data: %s", str(e)
-                )
+        except error.OpenAIError as err:
+            self._LOGGER.error(err)
+            self._state = f"Error: {err}"[:254]
 
-                retry_count += 1
-                await session.close()
-                await asyncio.sleep(0.5)
+        try:
+            data_img = await openai.Image.acreate(prompt=prompt, size=size)
 
-                if retry_count <= MAX_RETRIES:
-                    self._LOGGER.debug("Retrying the OpenAI request...")
-                else:
-                    self._LOGGER.error(
-                        "Maximum retries reached. Aborting the OpenAI request."
-                    )
-                    self._LOGGER.debug(response)
-                    self._LOGGER.debug(data)
+            self._LOGGER.debug(data_img)
+
+            image_data = data_img["data"][0]["url"]
+            ai_request_time = data_img["created"]
+
+            self._attributes = {
+                "song": song_info,
+                "type": image_type,
+                "image": image_data,
+                "fetched": ai_request_time,
+                "desc": song_data,
+                "tokens": token_count_img,
+            }
+
+            self._state = f"{song_info} - {ai_request_time} - {image_type}"
+
+        except error.OpenAIError as err:
+            self._LOGGER.error(f"There was an Error: {song_info} - {str(err)}")
+            self._LOGGER.debug(prompt)
+            self._attributes = {
+                "song": song_info,
+                "type": image_type,
+                "image": ERROR_IMG,
+                "fetched": int(time.time()),
+                "desc": str(err),
+                "tokens": token_count_img,
+            }
+            self._state = "ERROR"
+
+        finally:
+            await openai.aiosession.get().close()
+            self.async_write_ha_state()
 
     @property
     def name(self):

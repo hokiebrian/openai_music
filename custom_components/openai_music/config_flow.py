@@ -1,6 +1,7 @@
 """ Config Flow for OpenAI Music Companion """
-import aiohttp
+import openai
 import voluptuous as vol
+from openai import error
 from homeassistant import config_entries
 from homeassistant.helpers import config_validation as cv
 from .const import DOMAIN
@@ -48,17 +49,12 @@ class OpenAIMusicFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def test_openai_api_key(self, api_key):
         """Test the connection to the OpenAI API using the provided API key."""
-
-        headers = {"Authorization": f"Bearer {api_key}"}
+        openai.api_key = api_key
 
         try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(
-                    "https://api.openai.com/v1/engines", headers=headers
-                ) as response:
-                    response.raise_for_status()
-                    return True
-        except aiohttp.ClientError as error:
+            await openai.Engine.alist()
+            return True
+        except error.OpenAIError:
             return False
 
     @property
