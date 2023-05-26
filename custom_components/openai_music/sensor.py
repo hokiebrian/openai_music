@@ -153,6 +153,8 @@ class OpenAiImageSensor(Entity):
 
     async def async_get_openai_image(self, call):
         """Fetch the song info from the AI model."""
+        max_retry_attempts = 2
+        retry_count = 0
 
         song_title = call.data.get("song_title", DEFAULT_SONG_TITLE)
         song_artist = call.data.get("song_artist", DEFAULT_SONG_ARTIST)
@@ -182,7 +184,7 @@ class OpenAiImageSensor(Entity):
             {"role": "user", "content": f"Song: {song_info}"},
         ]
         max_tokens = DEFAULT_MAX_IMG_TOKENS
-        temperature = DEFAULT_TEMPERATURE
+        temperature = DEFAULT_IMG_TEMPERATURE
 
         self._LOGGER.debug(messages)
 
@@ -208,41 +210,43 @@ class OpenAiImageSensor(Entity):
             self._LOGGER.error(err)
             self._state = f"Error: {err}"[:254]
 
-        try:
-            data_img = await openai.Image.acreate(prompt=prompt, size=size)
+        while retry_count < max_retry_attempts:
+            try:
+                data_img = await openai.Image.acreate(prompt=prompt, size=size)
 
-            self._LOGGER.debug(data_img)
+                self._LOGGER.debug(data_img)
 
-            image_data = data_img["data"][0]["url"]
-            ai_request_time = data_img["created"]
+                image_data = data_img["data"][0]["url"]
+                ai_request_time = data_img["created"]
 
-            self._attributes = {
-                "song": song_info,
-                "type": image_type,
-                "image": image_data,
-                "fetched": ai_request_time,
-                "desc": song_data,
-                "tokens": token_count_img,
-            }
+                self._attributes = {
+                    "song": song_info,
+                    "type": image_type,
+                    "image": image_data,
+                    "fetched": ai_request_time,
+                    "desc": song_data,
+                    "tokens": token_count_img,
+                }
 
-            self._state = f"{song_info} - {ai_request_time} - {image_type}"
+                self._state = f"{song_info} - {ai_request_time} - {image_type}"
+                break
 
-        except error.OpenAIError as err:
-            self._LOGGER.error(f"There was an Error: {song_info} - {str(err)}")
-            self._LOGGER.debug(prompt)
-            self._attributes = {
-                "song": song_info,
-                "type": image_type,
-                "image": ERROR_IMG,
-                "fetched": int(time.time()),
-                "desc": str(err),
-                "tokens": token_count_img,
-            }
-            self._state = "ERROR"
+            except error.OpenAIError as err:
+                self._LOGGER.error(f"There was an Error: {song_info} - {str(err)}")
+                self._LOGGER.debug(prompt)
+                self._attributes = {
+                    "song": song_info,
+                    "type": image_type,
+                    "image": ERROR_IMG,
+                    "fetched": int(time.time()),
+                    "desc": str(err),
+                    "tokens": token_count_img,
+                }
+                retry_count += 1
+                self._state = "ERROR"
 
-        finally:
-            await openai.aiosession.get().close()
-            self.async_write_ha_state()
+        await openai.aiosession.get().close()
+        self.async_write_ha_state()
 
     @property
     def name(self):

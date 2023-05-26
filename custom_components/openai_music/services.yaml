@@ -97,7 +97,7 @@ get_openai_image:
     image_type:
       name: Image Type
       description: Image Type
-      example: "Andy Warhol"
+      example: "Gothic"
       required: false
       selector:
         select:
