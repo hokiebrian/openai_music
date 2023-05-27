@@ -18,11 +18,11 @@ class InfoSelectEntity(SelectEntity):
     """Select Info type to request."""
 
     _attr_icon = "mdi:chat-question"
+    _attr_unique_id = "OAIInfoSelect"
 
     def __init__(self):
         self._state = "Select"
         self._attr_options = sorted([key for key, value in PROMPTS.items()])
-        self._attr_unique_id = "OAIInfoSelect"
 
     @property
     def name(self):
@@ -46,11 +46,11 @@ class PersonalitySelectEntity(SelectEntity):
     """Select OpenAI Personality."""
 
     _attr_icon = "mdi:tooltip-account"
+    _attr_unique_id = "OAIPersonality"
 
     def __init__(self):
         self._state = "Select"
         self._attr_options = sorted([key for key, value in PERSONALITIES.items()])
-        self._attr_unique_id = "OAIPersonality"
 
     @property
     def name(self):
@@ -74,11 +74,11 @@ class ImageSelectEntity(SelectEntity):
     """Select Image Creation Profile."""
 
     _attr_icon = "mdi:palette"
+    _attr_unique_id = "OAIImageSelect"
 
     def __init__(self):
         self._state = "Select"
         self._attr_options = sorted([key for key, value in IMAGE_TYPES.items()])
-        self._attr_unique_id = "OAIImageSelect"
 
     @property
     def name(self):
