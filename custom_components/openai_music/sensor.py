@@ -195,6 +195,7 @@ class OpenAiImageSensor(Entity):
 
         _LOGGER.debug(messages)
 
+        # Retry if error. It's possible the safety system will flag it multiple times
         while retry_count < max_retry_attempts:
             try:
                 data = await openai.ChatCompletion.acreate(
@@ -245,9 +246,8 @@ class OpenAiImageSensor(Entity):
                 retry_count += 1
                 self._state = "ERROR"
 
-            finally:
-                await openai.aiosession.get().close()
-                self.async_write_ha_state()
+        await openai.aiosession.get().close()
+        self.async_write_ha_state()
 
     @property
     def name(self):
