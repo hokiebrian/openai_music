@@ -179,9 +179,11 @@ class OpenAiImageSensor(Entity):
         _LOGGER.debug(song_info)
 
         ai_prompt = (
-            "You are describing in 400 characters or less, in as much detail as possible, "
+            "You are an artist describing in 400 characters or less, "
+            "in as much detail as possible, "
             f"a SFW {image_type} image for the Song that would reflect the lyrical themes, "
-            "lyrical content and the band's style for an AI image generator."
+            "lyrical content of the song and the band's style for an image generator. "
+            "Provide only the descriptive text."
         )
 
         model = DEFAULT_CHAT_MODEL
