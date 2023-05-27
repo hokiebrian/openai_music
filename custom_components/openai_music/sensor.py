@@ -8,7 +8,24 @@ from aiohttp import ClientSession
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import Entity
 from homeassistant.const import CONF_API_KEY
-from .const import *
+from .const import (
+    DOMAIN,
+    DEFAULT_SONG_TITLE,
+    DEFAULT_SONG_ARTIST,
+    DEFAULT_CHAT_MODEL,
+    DEFAULT_MAX_TOKENS,
+    DEFAULT_MAX_IMG_TOKENS,
+    DEFAULT_TEMPERATURE,
+    DEFAULT_IMG_TEMPERATURE,
+    DEFAULT_IMAGE_TYPE,
+    DEFAULT_IMAGE_RESOLUTION,
+    ERROR_IMG,
+    MAX_RETRIES,
+    PERSONALITIES,
+    PROMPTS,
+    IMAGE_TYPES,
+)
+
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -27,7 +44,6 @@ async def async_setup_entry(hass: HomeAssistant, config_entry, async_add_entitie
 class OpenAiTextSensor(Entity):
     """OpenAI Music Text Sensor"""
 
-    _LOGGER = logging.getLogger(__name__)
     _attr_icon = "mdi:information-slab-box"
 
     def __init__(self, config_entry):
@@ -42,32 +58,26 @@ class OpenAiTextSensor(Entity):
     async def async_will_remove_from_hass(self):
         self.hass.services.async_remove(DOMAIN, "ask_openai")
 
+    @staticmethod
+    def _get_from_config(call_data, key, defaults):
+        """Gets configuration data with case-insensitive key matching."""
+        lc_key = {k.lower(): v for k, v in defaults.items()}
+        return lc_key.get(call_data.get(key, "").lower(), defaults.get(key))
+
     async def async_ask_openai(self, call):
         """Fetch the song info from the AI model."""
         song_title = call.data.get("song_title", DEFAULT_SONG_TITLE)
         song_artist = call.data.get("song_artist", DEFAULT_SONG_ARTIST)
         song_info = f"{song_title} by {song_artist}"
+        openai.aiosession.set(ClientSession())
 
-        self._LOGGER.debug(song_info)
+        _LOGGER.debug(song_info)
 
-        prompt = call.data.get("prompt", DEFAULT_PROMPT)
-        personality = call.data.get("personality", DEFAULT_PERSONALITY)
+        ai_prompt = self._get_from_config(call.data, "prompt", PROMPTS)
+        ai_personality = self._get_from_config(call.data, "personality", PERSONALITIES)
 
-        lc_prompt = {key.lower(): value for key, value in PROMPTS.items()}
-        match_prompt = lc_prompt.get(prompt.lower())
-
-        if match_prompt is not None:
-            ai_prompt = match_prompt
-        else:
-            ai_prompt = DEFAULT_PROMPT
-
-        lc_personality = {key.lower(): value for key, value in PERSONALITIES.items()}
-        match_personality = lc_personality.get(personality.lower())
-
-        if match_personality is not None:
-            ai_personality = match_personality
-        else:
-            ai_personality = f"Answer as a {personality}"
+        if ai_personality is None:
+            ai_personality = f"Answer as a {call.data.get('personality')}"
 
         model = DEFAULT_CHAT_MODEL
         temperature = DEFAULT_TEMPERATURE
@@ -76,11 +86,8 @@ class OpenAiTextSensor(Entity):
             {"role": "user", "content": f"{ai_prompt} {song_info}"},
         ]
         max_tokens = DEFAULT_MAX_TOKENS
-        temperature = DEFAULT_TEMPERATURE
 
-        self._LOGGER.debug(messages)
-
-        openai.aiosession.set(ClientSession())
+        _LOGGER.debug(messages)
 
         try:
             data = await openai.ChatCompletion.acreate(
@@ -90,7 +97,7 @@ class OpenAiTextSensor(Entity):
                 temperature=temperature,
             )
 
-            self._LOGGER.debug(data)
+            _LOGGER.debug(data)
 
             song_data = data["choices"][0]["message"]["content"].strip()
             token_count = data["usage"]["total_tokens"]
@@ -101,19 +108,20 @@ class OpenAiTextSensor(Entity):
                 "tokens": token_count,
                 "fetched": ai_request_time,
                 "request": messages,
-                "prompt": prompt,
-                "personality": personality,
+                "prompt": ai_prompt,
+                "personality": ai_personality,
             }
 
             self._state = song_info
 
         except error.OpenAIError as err:
-            self._LOGGER.error(err)
-            self._LOGGER.debug(prompt)
+            _LOGGER.error(err)
+            _LOGGER.debug(ai_prompt)
             self._state = f"Error: {err}"[:254]
 
-        await openai.aiosession.get().close()
-        self.async_write_ha_state()
+        finally:
+            await openai.aiosession.get().close()
+            self.async_write_ha_state()
 
     @property
     def name(self):
@@ -135,13 +143,13 @@ class OpenAiTextSensor(Entity):
 class OpenAiImageSensor(Entity):
     """OpenAI Image Creation"""
 
-    _LOGGER = logging.getLogger(__name__)
     _attr_icon = "mdi:multimedia"
 
     def __init__(self, config_entry):
         self.api_key = config_entry.data[CONF_API_KEY]
         self._state = None
         self._attributes = {}
+        openai.api_key = self.api_key
 
     async def async_added_to_hass(self):
         self.hass.services.async_register(
@@ -151,29 +159,28 @@ class OpenAiImageSensor(Entity):
     async def async_will_remove_from_hass(self):
         self.hass.services.async_remove(DOMAIN, "get_openai_image")
 
+    @staticmethod
+    def _get_from_config(call_data, key, defaults):
+        """Gets configuration data with case-insensitive key matching."""
+        lc_key = {k.lower(): v for k, v in defaults.items()}
+        return lc_key.get(call_data.get(key, "").lower(), defaults.get(key))
+
     async def async_get_openai_image(self, call):
         """Fetch the song info from the AI model."""
-        max_retry_attempts = 2
+        max_retry_attempts = MAX_RETRIES
         retry_count = 0
 
         song_title = call.data.get("song_title", DEFAULT_SONG_TITLE)
         song_artist = call.data.get("song_artist", DEFAULT_SONG_ARTIST)
         song_info = f"{song_title} by {song_artist}"
-        image_type = call.data.get("image_type", DEFAULT_IMAGE_TYPE)
-
-        self._LOGGER.debug(song_info)
-
-        img_prompt = {key.lower(): value for key, value in IMAGE_TYPES.items()}
-        img_match_prompt = img_prompt.get(image_type.lower())
-
-        if img_match_prompt is not None:
-            image_prompt = img_match_prompt
-        else:
-            image_prompt = image_type
+        image_type_name = call.data.get("image_type", DEFAULT_IMAGE_TYPE)
+        image_type = self._get_from_config(call.data, "image_type", IMAGE_TYPES)
+        openai.aiosession.set(ClientSession())
+        _LOGGER.debug(song_info)
 
         ai_prompt = (
             "You are describing in 400 characters or less, in as much detail as possible, "
-            f"a SFW {image_prompt} image for the Song that would reflect the lyrical themes, "
+            f"a SFW {image_type} image for the Song that would reflect the lyrical themes, "
             "lyrical content and the band's style for an AI image generator."
         )
 
@@ -186,57 +193,50 @@ class OpenAiImageSensor(Entity):
         max_tokens = DEFAULT_MAX_IMG_TOKENS
         temperature = DEFAULT_IMG_TEMPERATURE
 
-        self._LOGGER.debug(messages)
-
-        openai.aiosession.set(ClientSession())
-
-        try:
-            data = await openai.ChatCompletion.acreate(
-                model=model,
-                messages=messages,
-                max_tokens=max_tokens,
-                temperature=temperature,
-            )
-
-            self._LOGGER.debug(data)
-
-            song_data = data["choices"][0]["message"]["content"].strip()
-            token_count_img = data["usage"]["total_tokens"]
-
-            prompt = song_data
-            size = DEFAULT_IMAGE_RESOLUTION
-
-        except error.OpenAIError as err:
-            self._LOGGER.error(err)
-            self._state = f"Error: {err}"[:254]
+        _LOGGER.debug(messages)
 
         while retry_count < max_retry_attempts:
             try:
+                data = await openai.ChatCompletion.acreate(
+                    model=model,
+                    messages=messages,
+                    max_tokens=max_tokens,
+                    temperature=temperature,
+                )
+
+                _LOGGER.debug(data)
+
+                song_data = data["choices"][0]["message"]["content"].strip()
+                token_count_img = data["usage"]["total_tokens"]
+
+                prompt = song_data
+                size = DEFAULT_IMAGE_RESOLUTION
+
                 data_img = await openai.Image.acreate(prompt=prompt, size=size)
 
-                self._LOGGER.debug(data_img)
+                _LOGGER.debug(data_img)
 
                 image_data = data_img["data"][0]["url"]
                 ai_request_time = data_img["created"]
 
                 self._attributes = {
                     "song": song_info,
-                    "type": image_type,
+                    "type": image_type_name,
                     "image": image_data,
                     "fetched": ai_request_time,
                     "desc": song_data,
                     "tokens": token_count_img,
                 }
 
-                self._state = f"{song_info} - {ai_request_time} - {image_type}"
+                self._state = f"{song_info} - {ai_request_time} - {image_type_name}"
                 break
 
             except error.OpenAIError as err:
-                self._LOGGER.error(f"There was an Error: {song_info} - {str(err)}")
-                self._LOGGER.debug(prompt)
+                _LOGGER.error("There was an Error: %s - %s", song_info, str(err))
+                _LOGGER.debug(ai_prompt)
                 self._attributes = {
                     "song": song_info,
-                    "type": image_type,
+                    "type": image_type_name,
                     "image": ERROR_IMG,
                     "fetched": int(time.time()),
                     "desc": str(err),
@@ -245,8 +245,9 @@ class OpenAiImageSensor(Entity):
                 retry_count += 1
                 self._state = "ERROR"
 
-        await openai.aiosession.get().close()
-        self.async_write_ha_state()
+            finally:
+                await openai.aiosession.get().close()
+                self.async_write_ha_state()
 
     @property
     def name(self):

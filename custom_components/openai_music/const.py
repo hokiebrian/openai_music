@@ -73,7 +73,7 @@ IMAGE_TYPES = {
     "Still Life": "still life style",
     "Tim Burton": "Tim Burton style",
     "Van Gogh": "Van Gogh style",
-    "Vintage": "vintage photograph style",
+    "Vintage": "vintage sepia toned photograph style",
     "Whimsical": "whimsical style",
     "Yayoi Kusama": "Yayoi Kusama style",
 }

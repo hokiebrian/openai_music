@@ -5,7 +5,7 @@ ask_openai:
     song_title:
       name: Song Title
       description: Song Title
-      example: "Ball and Biscuit"
+      example: "Seven Nation Army"
       required: false
       selector: 
         text:
@@ -19,7 +19,7 @@ ask_openai:
     prompt:
       name: Prompt
       description: Prompt
-      example: "Give me info about the song"
+      example: "General Song Info"
       required: false
       selector:
         select:
@@ -39,7 +39,7 @@ ask_openai:
     personality:
       name: Personality
       description: Personality of the response
-      example: "Record Producer"
+      example: "Musician"
       required: false
       selector:
         select:
@@ -83,14 +83,14 @@ get_openai_image:
     song_title:
       name: Song Title
       description: Song Title
-      example: "Ball and Biscuit"
+      example: "Freebird"
       required: false
       selector: 
         text:
     song_artist:
       name: Song Artist
       description: Song Artist
-      example: "The White Stripes"
+      example: "Lynyrd Skynyrd"
       required: false
       selector: 
         text:

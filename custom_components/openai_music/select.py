@@ -1,4 +1,8 @@
-"""Select Entities for OpenAI Music Companion"""
+"""
+    Select Entities for OpenAI Music Companion
+    Retrieves items from const.py to build
+    dropdown select entities
+"""
 from homeassistant.components.select import SelectEntity
 from .const import IMAGE_TYPES, PROMPTS, PERSONALITIES
 
