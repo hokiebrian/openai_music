@@ -123,7 +123,15 @@ class OpenAiTextSensor(Entity):
                 _LOGGER.error(err)
                 _LOGGER.debug(ai_prompt)
                 retry_count += 1
-                self._state = f"Error: {err}"[:254]
+                self._attributes = {
+                    "info": str(err),
+                    "tokens": 0,
+                    "fetched": int(time.time()),
+                    "request": messages,
+                    "prompt": ai_prompt,
+                    "personality": ai_personality_name,
+                }
+                self._state = f"Error: {str(err)}"[:254]
 
         await openai.aiosession.get().close()
         self.async_write_ha_state()
@@ -232,7 +240,7 @@ class OpenAiImageSensor(Entity):
 
                 self._attributes = {
                     "song": song_info,
-                    "type": image_type,
+                    "type": image_type_name,
                     "image": image_data,
                     "fetched": ai_request_time,
                     "desc": song_data,
