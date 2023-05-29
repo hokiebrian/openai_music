@@ -69,10 +69,14 @@ class OpenAiTextSensor(Entity):
         song_title = call.data.get("song_title", DEFAULT_SONG_TITLE)
         song_artist = call.data.get("song_artist", DEFAULT_SONG_ARTIST)
         song_info = f"{song_title} by {song_artist}"
+
+        max_retry_attempts = MAX_RETRIES
+        retry_count = 0
+
         openai.aiosession.set(ClientSession())
 
         _LOGGER.debug(song_info)
-
+        ai_personality_name = call.data["personality"]
         ai_prompt = self._get_from_config(call.data, "prompt", PROMPTS)
         ai_personality = self._get_from_config(call.data, "personality", PERSONALITIES)
 
@@ -89,39 +93,40 @@ class OpenAiTextSensor(Entity):
 
         _LOGGER.debug(messages)
 
-        try:
-            data = await openai.ChatCompletion.acreate(
-                model=model,
-                messages=messages,
-                max_tokens=max_tokens,
-                temperature=temperature,
-            )
+        while retry_count < max_retry_attempts:
+            try:
+                data = await openai.ChatCompletion.acreate(
+                    model=model,
+                    messages=messages,
+                    max_tokens=max_tokens,
+                    temperature=temperature,
+                )
 
-            _LOGGER.debug(data)
+                _LOGGER.debug(data)
 
-            song_data = data["choices"][0]["message"]["content"].strip()
-            token_count = data["usage"]["total_tokens"]
-            ai_request_time = data["created"]
+                song_data = data["choices"][0]["message"]["content"].strip()
+                token_count = data["usage"]["total_tokens"]
+                ai_request_time = data["created"]
 
-            self._attributes = {
-                "info": song_data,
-                "tokens": token_count,
-                "fetched": ai_request_time,
-                "request": messages,
-                "prompt": ai_prompt,
-                "personality": ai_personality,
-            }
+                self._attributes = {
+                    "info": song_data,
+                    "tokens": token_count,
+                    "fetched": ai_request_time,
+                    "request": messages,
+                    "prompt": ai_prompt,
+                    "personality": ai_personality_name,
+                }
 
-            self._state = song_info
+                self._state = song_info
 
-        except error.OpenAIError as err:
-            _LOGGER.error(err)
-            _LOGGER.debug(ai_prompt)
-            self._state = f"Error: {err}"[:254]
+            except error.OpenAIError as err:
+                _LOGGER.error(err)
+                _LOGGER.debug(ai_prompt)
+                retry_count += 1
+                self._state = f"Error: {err}"[:254]
 
-        finally:
-            await openai.aiosession.get().close()
-            self.async_write_ha_state()
+        await openai.aiosession.get().close()
+        self.async_write_ha_state()
 
     @property
     def name(self):
@@ -175,6 +180,8 @@ class OpenAiImageSensor(Entity):
         song_info = f"{song_title} by {song_artist}"
         image_type_name = call.data.get("image_type", DEFAULT_IMAGE_TYPE)
         image_type = self._get_from_config(call.data, "image_type", IMAGE_TYPES)
+        if image_type is None:
+            image_type = call.data["image_type"]
         openai.aiosession.set(ClientSession())
         _LOGGER.debug(song_info)
 
@@ -194,6 +201,7 @@ class OpenAiImageSensor(Entity):
         ]
         max_tokens = DEFAULT_MAX_IMG_TOKENS
         temperature = DEFAULT_IMG_TEMPERATURE
+        token_count_img = 0
 
         _LOGGER.debug(messages)
 
@@ -224,7 +232,7 @@ class OpenAiImageSensor(Entity):
 
                 self._attributes = {
                     "song": song_info,
-                    "type": image_type_name,
+                    "type": image_type,
                     "image": image_data,
                     "fetched": ai_request_time,
                     "desc": song_data,

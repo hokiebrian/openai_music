@@ -8,8 +8,8 @@ DEFAULT_SONG_ARTIST = "Metallica"
 DEFAULT_CHAT_MODEL = "gpt-3.5-turbo"
 DEFAULT_MAX_TOKENS = 500
 DEFAULT_MAX_IMG_TOKENS = 250
-DEFAULT_TEMPERATURE = 0.3
-DEFAULT_IMG_TEMPERATURE = 0.1
+DEFAULT_TEMPERATURE = 0.5
+DEFAULT_IMG_TEMPERATURE = 0.2
 DEFAULT_TOP_P = 1.0
 DEFAULT_IMG_TOP_P = 1.0
 DEFAULT_IMAGE_TYPE = "normal"
@@ -33,6 +33,9 @@ PERSONALITIES = {
     "Paranoid": "Answer like a paranoid conspiracy theorist",
     "Canadian": "Answer like a sterotypical proud Canadian",
     "Hyperbole": "Answer like someone who only speaks in hyperbole",
+    "Country Bumpkin": "Answer like a country bumpkin",
+    "Hippie": "Answer like a confused hippie",
+    "Redneck": "Answer like an very angry redneck",
 }
 PROMPTS = {
     "General Song Info": "Give me general info about the song",
@@ -47,6 +50,7 @@ IMAGE_TYPES = {
     "Album Cover": "album cover style",
     "Andy Warhol": "Andy Warhol style",
     "Anime": "anime style",
+    "Antebellum": "Antebellum style",
     "Black and White": "black and white photograph style",
     "Cartoon": "cartoon",
     "Collage": "collage style",
@@ -61,7 +65,8 @@ IMAGE_TYPES = {
     "Metaphysical": "metaphysical style",
     "Minimalism": "minimalism style",
     "Modern": "modern style",
-    "Normal": "Normal",
+    "Neon": "neon colors",
+    "Normal": "Typical",
     "Old Cartoon": "Old timey cartoon style",
     "Oil Painting": "oil paining style",
     "Pablo Picasso": "Pablo Picasso style",
@@ -74,6 +79,7 @@ IMAGE_TYPES = {
     "Tim Burton": "Tim Burton style",
     "Van Gogh": "Van Gogh style",
     "Vintage": "vintage sepia toned photograph style",
+    "Watercolors": "watercolors",
     "Whimsical": "whimsical style",
     "Yayoi Kusama": "Yayoi Kusama style",
 }

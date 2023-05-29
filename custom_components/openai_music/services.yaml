@@ -48,8 +48,12 @@ ask_openai:
               value: "Canadian"
             - label: Clueless
               value: "Clueless"
+            - label: Country Bumpkin
+              value: "Country Bumpkin"
             - label: Grumpy Old Man
               value: "Grumpy Old Man"
+            - label: Hippie
+              value: "Hippie"
             - label: Hipster
               value: "Hipster"
             - label: Intellectual
@@ -68,6 +72,8 @@ ask_openai:
               value: "Paranoid"
             - label: Pirate
               value: "Pirate"
+            - label: Redneck
+              value: "Redneck"
             - label: Scientist
               value: "Scientist"
             - label: Stoner
@@ -110,6 +116,8 @@ get_openai_image:
               value: "Andy Warhol"
             - label: Anime
               value: "Anime"
+            - label: Antebellum
+              value: "Antebellum"
             - label: Black and White
               value: "Black and White"
             - label: Cartoon
@@ -138,6 +146,8 @@ get_openai_image:
               value: "Minimalism"
             - label: Modern
               value: "Modern"
+            - label: Neon
+              value: "Neon"
             - label: Normal
               value: "Normal"
             - label: Old Cartoon
@@ -164,6 +174,8 @@ get_openai_image:
               value: "Van Gogh"
             - label: Vintage
               value: "Vintage"
+            - label: Watercolors
+              value: "Watercolors"
             - label: Whimsical
               value: "Whimdsical"
             - label: Yayoi Kusama
