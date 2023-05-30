@@ -1,19 +1,32 @@
 {
     "config": {
-      "flow_title": "OpenAI Music Companion",
-      "step": {
-        "user": {
-          "title": "Enter your OpenAI API Key",
-          "data": {
-            "api_key": "API Key"
-          }
+        "abort": {
+            "already_configured": "Integration is already configured"
+        },
+        "error": {
+          "invalid_api_key": "Invalid API Key"
+        },
+        "step": {
+            "user": {
+              "title": "Enter your OpenAI API Key",
+              "data": {
+                "api_key": "API Key"
+              }
+            }
         }
-      },
-      "error": {
-        "invalid_api_key": "Invalid API Key"
-      },
-      "abort": {
-        "already_configured": "This integration has already been configured"
-      }
+    },
+    "options": {
+        "step": {
+            "init": {
+              "data": {
+                "temperature": "Temperature (Range 0-1, default: 0.5)",
+                "img_temperature": "Image Temperature (Range 0-1, default: 0.2)",
+                "max_tokens": "Max Tokens (Range 100-1000, default: 500)",
+                "chat_model": "Chat Model (Default: gpt-3.5-turbo)",
+                "img_resolution": "Image Resolution (Default: 1024x1024)"
+              },
+                "description": "Configure OpenAI Options"
+            }
+        }
     }
-  }
+}

@@ -48,6 +48,7 @@ class OpenAiTextSensor(Entity):
 
     def __init__(self, config_entry):
         self.api_key = config_entry.data[CONF_API_KEY]
+        self.config = config_entry
         self._state = None
         self._attributes = {}
         openai.api_key = self.api_key
@@ -66,32 +67,35 @@ class OpenAiTextSensor(Entity):
 
     async def async_ask_openai(self, call):
         """Fetch the song info from the AI model."""
-        song_title = call.data.get("song_title", DEFAULT_SONG_TITLE)
-        song_artist = call.data.get("song_artist", DEFAULT_SONG_ARTIST)
+        call_data = call.data
+        song_title = call_data.get("song_title", DEFAULT_SONG_TITLE)
+        song_artist = call_data.get("song_artist", DEFAULT_SONG_ARTIST)
+        ai_personality_name = call_data["personality"]
         song_info = f"{song_title} by {song_artist}"
 
+        config_options = self.config.options
+        temperature = config_options.get("temperature", DEFAULT_TEMPERATURE)
+        max_tokens = config_options.get("max_tokens", DEFAULT_MAX_TOKENS)
+        model = config_options.get("chat_model", DEFAULT_CHAT_MODEL)
         max_retry_attempts = MAX_RETRIES
         retry_count = 0
 
-        openai.aiosession.set(ClientSession())
-
         _LOGGER.debug(song_info)
-        ai_personality_name = call.data["personality"]
-        ai_prompt = self._get_from_config(call.data, "prompt", PROMPTS)
-        ai_personality = self._get_from_config(call.data, "personality", PERSONALITIES)
+
+        ai_prompt = self._get_from_config(call_data, "prompt", PROMPTS)
+        ai_personality = self._get_from_config(call_data, "personality", PERSONALITIES)
 
         if ai_personality is None:
-            ai_personality = f"Answer as a {call.data.get('personality')}"
+            ai_personality = f"Answer as a {call_data.get('personality')}"
 
-        model = DEFAULT_CHAT_MODEL
-        temperature = DEFAULT_TEMPERATURE
         messages = [
             {"role": "system", "content": ai_personality},
             {"role": "user", "content": f"{ai_prompt} {song_info}"},
         ]
-        max_tokens = DEFAULT_MAX_TOKENS
 
         _LOGGER.debug(messages)
+
+        openai.aiosession.set(ClientSession())
 
         while retry_count < max_retry_attempts:
             try:
@@ -121,7 +125,7 @@ class OpenAiTextSensor(Entity):
 
             except error.OpenAIError as err:
                 _LOGGER.error(err)
-                _LOGGER.debug(ai_prompt)
+                _LOGGER.error("There was an Error: %s - %s", song_info, str(err))
                 retry_count += 1
                 self._attributes = {
                     "info": str(err),
@@ -160,6 +164,7 @@ class OpenAiImageSensor(Entity):
 
     def __init__(self, config_entry):
         self.api_key = config_entry.data[CONF_API_KEY]
+        self.config = config_entry
         self._state = None
         self._attributes = {}
         openai.api_key = self.api_key
@@ -182,15 +187,27 @@ class OpenAiImageSensor(Entity):
         """Fetch the song info from the AI model."""
         max_retry_attempts = MAX_RETRIES
         retry_count = 0
+        token_count_img = 0
 
-        song_title = call.data.get("song_title", DEFAULT_SONG_TITLE)
-        song_artist = call.data.get("song_artist", DEFAULT_SONG_ARTIST)
+        # Get Service Call Data
+        call_data = call.data
+        song_title = call_data.get("song_title", DEFAULT_SONG_TITLE)
+        song_artist = call_data.get("song_artist", DEFAULT_SONG_ARTIST)
         song_info = f"{song_title} by {song_artist}"
-        image_type_name = call.data.get("image_type", DEFAULT_IMAGE_TYPE)
-        image_type = self._get_from_config(call.data, "image_type", IMAGE_TYPES)
-        if image_type is None:
-            image_type = call.data["image_type"]
-        openai.aiosession.set(ClientSession())
+
+        # Get Integration Options or use defaults
+        config_options = self.config.options
+        temperature = config_options.get("img_temperature", DEFAULT_IMG_TEMPERATURE)
+        max_tokens = config_options.get("max_tokens", DEFAULT_MAX_IMG_TOKENS)
+        model = config_options.get("chat_model", DEFAULT_CHAT_MODEL)
+        size = config_options.get("img_resolution", DEFAULT_IMAGE_RESOLUTION)
+
+        image_type = (
+            self._get_from_config(call_data, "image_type", IMAGE_TYPES)
+            or call_data["image_type"]
+        )
+        image_type_name = call_data.get("image_type", DEFAULT_IMAGE_TYPE)
+
         _LOGGER.debug(song_info)
 
         ai_prompt = (
@@ -201,17 +218,14 @@ class OpenAiImageSensor(Entity):
             "Provide only the descriptive text."
         )
 
-        model = DEFAULT_CHAT_MODEL
-        temperature = DEFAULT_TEMPERATURE
         messages = [
             {"role": "system", "content": ai_prompt},
             {"role": "user", "content": f"Song: {song_info}"},
         ]
-        max_tokens = DEFAULT_MAX_IMG_TOKENS
-        temperature = DEFAULT_IMG_TEMPERATURE
-        token_count_img = 0
 
         _LOGGER.debug(messages)
+
+        openai.aiosession.set(ClientSession())
 
         # Retry if error. It's possible the safety system will flag it multiple times
         while retry_count < max_retry_attempts:
@@ -229,7 +243,6 @@ class OpenAiImageSensor(Entity):
                 token_count_img = data["usage"]["total_tokens"]
 
                 prompt = song_data
-                size = DEFAULT_IMAGE_RESOLUTION
 
                 data_img = await openai.Image.acreate(prompt=prompt, size=size)
 
