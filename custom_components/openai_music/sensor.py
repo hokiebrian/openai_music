@@ -122,6 +122,7 @@ class OpenAiTextSensor(Entity):
                 }
 
                 self._state = song_info
+                break
 
             except error.OpenAIError as err:
                 _LOGGER.error(err)

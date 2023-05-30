@@ -9,5 +9,5 @@
     "iot_class": "cloud_polling",
     "issue_tracker": "https://github.com/hokiebrian/openai_music/issues",
     "requirements": ["openai"],
-    "version": "1.0.10"
+    "version": "1.0.11"
 }
