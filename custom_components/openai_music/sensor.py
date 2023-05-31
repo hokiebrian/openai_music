@@ -125,7 +125,6 @@ class OpenAiTextSensor(Entity):
                 break
 
             except error.OpenAIError as err:
-                _LOGGER.error(err)
                 _LOGGER.error("There was an Error: %s - %s", song_info, str(err))
                 retry_count += 1
                 self._attributes = {
@@ -214,8 +213,8 @@ class OpenAiImageSensor(Entity):
         ai_prompt = (
             "You are an artist describing in 400 characters or less, "
             "in as much detail as possible, "
-            f"a SFW {image_type} image for the Song that would reflect the lyrical themes, "
-            "lyrical content of the song and the band's style for an image generator. "
+            f"a SFW {image_type} image for the Song that would reflect the lyrical themes "
+            "and lyrical content of the song and the band's style for an image generator. "
             "Provide only the descriptive text."
         )
 
@@ -267,6 +266,7 @@ class OpenAiImageSensor(Entity):
             except error.OpenAIError as err:
                 _LOGGER.error("There was an Error: %s - %s", song_info, str(err))
                 _LOGGER.debug(ai_prompt)
+                retry_count += 1
                 self._attributes = {
                     "song": song_info,
                     "type": image_type_name,
@@ -275,7 +275,6 @@ class OpenAiImageSensor(Entity):
                     "desc": str(err),
                     "tokens": token_count_img,
                 }
-                retry_count += 1
                 self._state = "ERROR"
 
         await openai.aiosession.get().close()

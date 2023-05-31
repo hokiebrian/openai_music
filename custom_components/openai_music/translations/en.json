@@ -19,8 +19,8 @@
         "step": {
             "init": {
               "data": {
-                "temperature": "Temperature (Range 0-1, default: 0.5)",
-                "img_temperature": "Image Temperature (Range 0-1, default: 0.2)",
+                "temperature": "Temperature (Range 0-2, default: 0.5)",
+                "img_temperature": "Image Temperature (Range 0-2, default: 0.2)",
                 "max_tokens": "Max Tokens (Range 100-1000, default: 500)",
                 "chat_model": "Chat Model (Default: gpt-3.5-turbo)",
                 "img_resolution": "Image Resolution (Default: 1024x1024)"

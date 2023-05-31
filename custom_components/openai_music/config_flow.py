@@ -28,8 +28,8 @@ class OpenAIMusicFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             # Validate the user input against the expected schema
             try:
                 self.schema(user_input)
-            except vol.Invalid as e:
-                errors[e.path[0]] = str(e)
+            except vol.Invalid as err:
+                errors[err.path[0]] = str(err)
 
             # Test the OpenAI API with the user's API key
             api_key = user_input.get("api_key")
@@ -110,16 +110,16 @@ class OpenAIMusicOptionsFlow(config_entries.OptionsFlow):
             data_schema=vol.Schema(
                 {
                     vol.Optional("temperature", default=temperature): vol.All(
-                        vol.Coerce(float), vol.Range(min=0.0, max=1.0)
+                        vol.Coerce(float), vol.Range(min=0.0, max=2.0)
                     ),
                     vol.Optional("img_temperature", default=img_temperature): vol.All(
-                        vol.Coerce(float), vol.Range(min=0.0, max=1.0)
+                        vol.Coerce(float), vol.Range(min=0.0, max=2.0)
                     ),
                     vol.Optional("max_tokens", default=max_tokens): vol.All(
                         vol.Coerce(int), vol.Range(min=100, max=1000)
                     ),
                     vol.Optional("chat_model", default=chat_model): vol.In(
-                        ["gpt-3.5-turbo"]
+                        ["gpt-3.5-turbo", "gpt-4"]
                     ),
                     vol.Optional("img_resolution", default=img_resolution): vol.In(
                         ["1024x1024", "768x768", "512x512"]

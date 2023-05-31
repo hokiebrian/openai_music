@@ -20,7 +20,7 @@ PERSONALITIES = {
     "Normal": "Answer like a Music Expert",
     "Hipster": "Answer like a hipster who is really into the scene",
     "Stoner": "Answer like a stoner who loves music",
-    "Musician": "Answer like a fellow musician with technical details",
+    "Musician": "Answer like a musician with technical details",
     "Grumpy Old Man": "Answer like a grumpy old man",
     "Intellectual": "Answer like an intellectual who knows everything",
     "Pirate": "Answer like a pirate that is very excited to talk about music",
