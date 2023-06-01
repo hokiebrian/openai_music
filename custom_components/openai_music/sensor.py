@@ -211,16 +211,24 @@ class OpenAiImageSensor(Entity):
         _LOGGER.debug(song_info)
 
         ai_prompt = (
-            "You are an artist describing in 400 characters or less, "
-            "in as much detail as possible, "
-            f"a SFW {image_type} image for the Song that would reflect the lyrical themes "
-            "and lyrical content of the song and the band's style for an image generator. "
-            "Provide only the descriptive text."
+            "You are creating a prompt in 3 sentences or less for "
+            "a detailed Style image for the Song that would provide a literal "
+            "intepretation of the lyrics. "
+            "Provide only descriptive text emphasizing detail and the style. "
+            "Don't use the word create."
         )
+
+#        ai_prompt = (
+#            "You are creating a descriptive prompt in 3 sentences or less for "
+#            "a detailed Style image for the Song that would reflect the lyrical content "
+#            "and themes of the song and the band's style. "
+#            "Provide only the descriptive text emphasizing detail and the style. "
+#            "Blend in some literals from the lyrics. Don't use the word create."
+#        )
 
         messages = [
             {"role": "system", "content": ai_prompt},
-            {"role": "user", "content": f"Song: {song_info}"},
+            {"role": "user", "content": f"Song: {song_info}, Style: {image_type}"},
         ]
 
         _LOGGER.debug(messages)
