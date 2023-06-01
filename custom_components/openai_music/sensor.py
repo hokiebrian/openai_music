@@ -211,20 +211,12 @@ class OpenAiImageSensor(Entity):
         _LOGGER.debug(song_info)
 
         ai_prompt = (
-            "You are creating a prompt in 3 sentences or less for "
-            "a detailed Style image for the Song that would provide a literal "
+            "Create a prompt in 3 sentences or less for "
+            "a detailed Style image for the Song that would provide an "
             "intepretation of the lyrics. "
-            "Provide only descriptive text emphasizing detail and the style. "
-            "Don't use the word create."
+            "Provide only descriptive text emphasizing detail, style and lyrical themes. "
+            "Don't use the word create. Speak in the present tense."
         )
-
-#        ai_prompt = (
-#            "You are creating a descriptive prompt in 3 sentences or less for "
-#            "a detailed Style image for the Song that would reflect the lyrical content "
-#            "and themes of the song and the band's style. "
-#            "Provide only the descriptive text emphasizing detail and the style. "
-#            "Blend in some literals from the lyrics. Don't use the word create."
-#        )
 
         messages = [
             {"role": "system", "content": ai_prompt},
