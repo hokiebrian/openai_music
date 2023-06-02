@@ -128,8 +128,8 @@ get_openai_image:
               value: "Comic Book"
             - label: Cyberpunk
               value: "Cyberpunk"
-            - label: Frida Kahlo
-              value: "Frida Kahlo"
+            - label: Depressive
+              value: "Depressive"
             - label: Futurism
               value: "Futurism"
             - label: Gothic
@@ -158,8 +158,12 @@ get_openai_image:
               value: "Pablo Picasso"
             - label: Pastel
               value: "Pastel"
+            - label: Photographic
+              value: "Photographic"             
             - label: Photorealism
               value: "Photorealism"
+            - label: Pop Surrealism
+              value: "Pop Surrealism"
             - label: Psychedelic
               value: "Psychedelic"
             - label: Salvador Dalí
@@ -178,5 +182,4 @@ get_openai_image:
               value: "Watercolors"
             - label: Whimsical
               value: "Whimdsical"
-            - label: Yayoi Kusama
-              value: "Yayoi Kusama"
+
