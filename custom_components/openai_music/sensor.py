@@ -3,6 +3,7 @@
 import logging
 import time
 import openai
+import aiohttp
 from openai import error
 from aiohttp import ClientSession
 from homeassistant.core import HomeAssistant
@@ -73,6 +74,8 @@ class OpenAiTextSensor(Entity):
         ai_personality_name = call_data["personality"]
         song_info = f"{song_title} by {song_artist}"
 
+        text_session = aiohttp.ClientSession()
+
         config_options = self.config.options
         temperature = config_options.get("temperature", DEFAULT_TEMPERATURE)
         max_tokens = config_options.get("max_tokens", DEFAULT_MAX_TOKENS)
@@ -95,10 +98,9 @@ class OpenAiTextSensor(Entity):
 
         _LOGGER.debug(messages)
 
-        openai.aiosession.set(ClientSession())
-
         while retry_count < max_retry_attempts:
             try:
+                openai.aiosession.set(text_session)
                 data = await openai.ChatCompletion.acreate(
                     model=model,
                     messages=messages,
@@ -137,7 +139,7 @@ class OpenAiTextSensor(Entity):
                 }
                 self._state = f"Error: {str(err)}"[:254]
 
-        await openai.aiosession.get().close()
+        await openai.aiosession.get(text_session).close()
         self.async_write_ha_state()
 
     @property
@@ -189,6 +191,9 @@ class OpenAiImageSensor(Entity):
         retry_count = 0
         token_count_img = 0
 
+        info_session = aiohttp.ClientSession()
+        img_session = aiohttp.ClientSession()
+
         # Get Service Call Data
         call_data = call.data
         song_title = call_data.get("song_title", DEFAULT_SONG_TITLE)
@@ -225,11 +230,11 @@ class OpenAiImageSensor(Entity):
 
         _LOGGER.debug(messages)
 
-        openai.aiosession.set(ClientSession())
 
         # Retry if error. It's possible the safety system will flag it multiple times
         while retry_count < max_retry_attempts:
             try:
+                openai.aiosession.set(info_session)
                 data = await openai.ChatCompletion.acreate(
                     model=model,
                     messages=messages,
@@ -244,6 +249,7 @@ class OpenAiImageSensor(Entity):
 
                 prompt = song_data
 
+                openai.aiosession.set(img_session)
                 data_img = await openai.Image.acreate(prompt=prompt, size=size)
 
                 _LOGGER.debug(data_img)
@@ -277,7 +283,8 @@ class OpenAiImageSensor(Entity):
                 }
                 self._state = "ERROR"
 
-        await openai.aiosession.get().close()
+        await openai.aiosession.get(info_session).close()
+        await openai.aiosession.get(img_session).close()
         self.async_write_ha_state()
 
     @property
