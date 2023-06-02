@@ -5,7 +5,8 @@ import time
 import openai
 import aiohttp
 from openai import error
-from aiohttp import ClientSession
+
+# from aiohttp import ClientSession
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import Entity
 from homeassistant.const import CONF_API_KEY
@@ -68,6 +69,7 @@ class OpenAiTextSensor(Entity):
 
     async def async_ask_openai(self, call):
         """Fetch the song info from the AI model."""
+        start_time = time.time()
         call_data = call.data
         song_title = call_data.get("song_title", DEFAULT_SONG_TITLE)
         song_artist = call_data.get("song_artist", DEFAULT_SONG_ARTIST)
@@ -102,7 +104,6 @@ class OpenAiTextSensor(Entity):
 
         while retry_count < max_retry_attempts:
             try:
-                
                 data = await openai.ChatCompletion.acreate(
                     model=model,
                     messages=messages,
@@ -142,6 +143,8 @@ class OpenAiTextSensor(Entity):
                 self._state = f"Error: {str(err)}"[:254]
 
         await openai.aiosession.get(text_session).close()
+        elapsed_time = time.time() - start_time
+        self._attributes["elapsed_time"] = round(elapsed_time, 2)
         self.async_write_ha_state()
 
     @property
@@ -189,6 +192,7 @@ class OpenAiImageSensor(Entity):
 
     async def async_get_openai_image(self, call):
         """Fetch the song info from the AI model."""
+        start_time = time.time()
         max_retry_attempts = MAX_RETRIES
         retry_count = 0
         token_count_img = 0
@@ -285,6 +289,8 @@ class OpenAiImageSensor(Entity):
                 self._state = "ERROR"
 
         await openai.aiosession.get(img_session).close()
+        elapsed_time = time.time() - start_time
+        self._attributes["elapsed_time"] = round(elapsed_time, 2)
         self.async_write_ha_state()
 
     @property
