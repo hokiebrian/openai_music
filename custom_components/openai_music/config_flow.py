@@ -122,7 +122,7 @@ class OpenAIMusicOptionsFlow(config_entries.OptionsFlow):
                         ["gpt-3.5-turbo", "gpt-4"]
                     ),
                     vol.Optional("img_resolution", default=img_resolution): vol.In(
-                        ["1024x1024", "768x768", "512x512"]
+                        ["1024x1024", "512x512", "256x256"]
                     ),
                 }
             ),
