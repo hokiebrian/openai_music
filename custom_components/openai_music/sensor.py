@@ -5,8 +5,6 @@ import time
 import openai
 import aiohttp
 from openai import error
-
-# from aiohttp import ClientSession
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import Entity
 from homeassistant.const import CONF_API_KEY
@@ -15,6 +13,7 @@ from .const import (
     DEFAULT_SONG_TITLE,
     DEFAULT_SONG_ARTIST,
     DEFAULT_CHAT_MODEL,
+    DEFAULT_USER_TAG,
     DEFAULT_MAX_TOKENS,
     DEFAULT_MAX_IMG_TOKENS,
     DEFAULT_TEMPERATURE,
@@ -82,6 +81,7 @@ class OpenAiTextSensor(Entity):
         temperature = config_options.get("temperature", DEFAULT_TEMPERATURE)
         max_tokens = config_options.get("max_tokens", DEFAULT_MAX_TOKENS)
         model = config_options.get("chat_model", DEFAULT_CHAT_MODEL)
+        user_tag = config_options.get("user_tag", DEFAULT_USER_TAG).strip()
         max_retry_attempts = MAX_RETRIES
         retry_count = 0
 
@@ -109,6 +109,7 @@ class OpenAiTextSensor(Entity):
                     messages=messages,
                     max_tokens=max_tokens,
                     temperature=temperature,
+                    user=user_tag,
                 )
 
                 _LOGGER.debug(data)
@@ -210,6 +211,7 @@ class OpenAiImageSensor(Entity):
         temperature = config_options.get("img_temperature", DEFAULT_IMG_TEMPERATURE)
         max_tokens = config_options.get("max_tokens", DEFAULT_MAX_IMG_TOKENS)
         model = config_options.get("chat_model", DEFAULT_CHAT_MODEL)
+        user_tag = config_options.get("user_tag", DEFAULT_USER_TAG)
         size = config_options.get("img_resolution", DEFAULT_IMAGE_RESOLUTION)
 
         image_type = (
@@ -245,6 +247,7 @@ class OpenAiImageSensor(Entity):
                     messages=messages,
                     max_tokens=max_tokens,
                     temperature=temperature,
+                    user=user_tag,
                 )
 
                 _LOGGER.debug(data)
@@ -255,7 +258,9 @@ class OpenAiImageSensor(Entity):
                 prompt = song_data
 
                 openai.aiosession.set(img_session)
-                data_img = await openai.Image.acreate(prompt=prompt, size=size)
+                data_img = await openai.Image.acreate(
+                    prompt=prompt, size=size, user=user_tag
+                )
 
                 _LOGGER.debug(data_img)
 

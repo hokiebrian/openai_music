@@ -11,6 +11,7 @@ from .const import (
     DEFAULT_MAX_TOKENS,
     DEFAULT_IMAGE_RESOLUTION,
     DEFAULT_IMG_TEMPERATURE,
+    DEFAULT_USER_TAG,
 )
 
 
@@ -104,6 +105,7 @@ class OpenAIMusicOptionsFlow(config_entries.OptionsFlow):
         img_resolution = self.config_entry.options.get(
             "img_resolution", DEFAULT_IMAGE_RESOLUTION
         )
+        user_tag = self.config_entry.options.get("user_tag", DEFAULT_USER_TAG)
 
         return self.async_show_form(
             step_id="init",
@@ -124,6 +126,7 @@ class OpenAIMusicOptionsFlow(config_entries.OptionsFlow):
                     vol.Optional("img_resolution", default=img_resolution): vol.In(
                         ["1024x1024", "512x512", "256x256"]
                     ),
+                    vol.Optional("user_tag", default=user_tag): str,
                 }
             ),
         )

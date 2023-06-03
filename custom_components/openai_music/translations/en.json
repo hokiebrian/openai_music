@@ -23,7 +23,8 @@
                 "img_temperature": "Image Temperature (Range 0-2, default: 0.2)",
                 "max_tokens": "Max Tokens (Range 100-1000, default: 500)",
                 "chat_model": "Chat Model (Default: gpt-3.5-turbo)",
-                "img_resolution": "Image Resolution (Default: 1024x1024)"
+                "img_resolution": "Image Resolution (Default: 1024x1024)",
+                "user_tag": "User Tag used for OpenAI Requests"
               },
                 "description": "Configure OpenAI Options"
             }
