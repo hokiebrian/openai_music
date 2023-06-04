@@ -36,6 +36,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry, async_add_entitie
     sensors = [
         OpenAiTextSensor(config_entry),
         OpenAiImageSensor(config_entry),
+        OpenAiTextSensorSecondary(config_entry),
     ]
 
     for sensor in sensors:
@@ -87,7 +88,9 @@ class OpenAiTextSensor(Entity):
 
         _LOGGER.debug(song_info)
 
-        ai_prompt = self._get_from_config(call_data, "prompt", PROMPTS)
+        ai_prompt = (
+            self._get_from_config(call_data, "prompt", PROMPTS) or call_data["prompt"]
+        )
         ai_personality = self._get_from_config(call_data, "personality", PERSONALITIES)
 
         if ai_personality is None:
@@ -159,6 +162,133 @@ class OpenAiTextSensor(Entity):
     @property
     def unique_id(self):
         return f"AskOpenAI{self.api_key[:7]}"
+
+    @property
+    def extra_state_attributes(self):
+        return self._attributes
+
+
+class OpenAiTextSensorSecondary(Entity):
+    """OpenAI Music Text Sensor #2"""
+
+    _attr_icon = "mdi:information-slab-box"
+
+    def __init__(self, config_entry):
+        self.api_key = config_entry.data[CONF_API_KEY]
+        self.config = config_entry
+        self._state = None
+        self._attributes = {}
+        openai.api_key = self.api_key
+
+    async def async_added_to_hass(self):
+        self.hass.services.async_register(
+            DOMAIN, "ask_openai_secondary", self.async_ask_openai
+        )
+
+    async def async_will_remove_from_hass(self):
+        self.hass.services.async_remove(DOMAIN, "ask_openai_secondary")
+
+    @staticmethod
+    def _get_from_config(call_data, key, defaults):
+        """Gets configuration data with case-insensitive key matching."""
+        lc_key = {k.lower(): v for k, v in defaults.items()}
+        return lc_key.get(call_data.get(key, "").lower(), defaults.get(key))
+
+    async def async_ask_openai(self, call):
+        """Fetch the song info from the AI model."""
+        start_time = time.time()
+        call_data = call.data
+        song_title = call_data.get("song_title", DEFAULT_SONG_TITLE)
+        song_artist = call_data.get("song_artist", DEFAULT_SONG_ARTIST)
+        ai_personality_name = call_data["personality"]
+        song_info = f"{song_title} by {song_artist}"
+
+        text_session = aiohttp.ClientSession()
+
+        config_options = self.config.options
+        temperature = config_options.get("temperature", DEFAULT_TEMPERATURE)
+        max_tokens = config_options.get("max_tokens", DEFAULT_MAX_TOKENS)
+        model = config_options.get("chat_model", DEFAULT_CHAT_MODEL)
+        user_tag = config_options.get("user_tag", DEFAULT_USER_TAG).strip()
+        max_retry_attempts = MAX_RETRIES
+        retry_count = 0
+
+        _LOGGER.debug(song_info)
+
+        ai_prompt = (
+            self._get_from_config(call_data, "prompt", PROMPTS) or call_data["prompt"]
+        )
+        ai_personality = self._get_from_config(call_data, "personality", PERSONALITIES)
+
+        if ai_personality is None:
+            ai_personality = f"Answer as a {call_data.get('personality')}"
+
+        messages = [
+            {"role": "system", "content": ai_personality},
+            {"role": "user", "content": f"{ai_prompt} {song_info}"},
+        ]
+
+        _LOGGER.debug(messages)
+
+        openai.aiosession.set(text_session)
+
+        while retry_count < max_retry_attempts:
+            try:
+                data = await openai.ChatCompletion.acreate(
+                    model=model,
+                    messages=messages,
+                    max_tokens=max_tokens,
+                    temperature=temperature,
+                    user=user_tag,
+                )
+
+                _LOGGER.debug(data)
+
+                song_data = data["choices"][0]["message"]["content"].strip()
+                token_count = data["usage"]["total_tokens"]
+                ai_request_time = data["created"]
+
+                self._attributes = {
+                    "info": song_data,
+                    "tokens": token_count,
+                    "fetched": ai_request_time,
+                    "request": messages,
+                    "prompt": ai_prompt,
+                    "personality": ai_personality_name,
+                }
+
+                self._state = song_info
+                break
+
+            except error.OpenAIError as err:
+                _LOGGER.error("There was an Error: %s - %s", song_info, str(err))
+                retry_count += 1
+                self._attributes = {
+                    "info": str(err),
+                    "tokens": 0,
+                    "fetched": int(time.time()),
+                    "request": messages,
+                    "prompt": ai_prompt,
+                    "personality": ai_personality_name,
+                }
+                self._state = f"Error: {str(err)}"[:254]
+
+        await openai.aiosession.get(text_session).close()
+        elapsed_time = time.time() - start_time
+        self._attributes["elapsed_time"] = round(elapsed_time, 2)
+        self.async_write_ha_state()
+
+    @property
+    def name(self):
+        return "OpenAI Music Info Secondary"
+
+    @property
+    def state(self):
+        return self._state
+
+    @property
+    def unique_id(self):
+        return f"AskOpenAI_2{self.api_key[:7]}"
 
     @property
     def extra_state_attributes(self):

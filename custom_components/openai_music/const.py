@@ -40,6 +40,7 @@ PERSONALITIES = {
 }
 PROMPTS = {
     "General Song Info": "Give me general info about the song",
+    "Artist Info": "Tell me about the artist only, nothing about the song",
     "Lyric Meanings": "How are the lyrics generally interpreted for",
     "Song Trivia": "Tell me some trivia about the song",
     "Songwriters": "Who wrote the song",

@@ -26,6 +26,94 @@ ask_openai:
           options:
             - label: General Song Info
               value: "General Song Info"
+            - label: Artist Info
+              value: "Artist Info"
+            - label: Lyric Meanings
+              value: "Lyric Meanings"
+            - label: Recording Info
+              value: "Recording Info"
+            - label: Song Trivia
+              value: "Song Trivia"
+            - label: Songwriters
+              value: "Songwriters"
+            - label: Similar Songs
+              value: "Similar Songs"
+    personality:
+      name: Personality
+      description: Personality of the response
+      example: "Musician"
+      required: false
+      selector:
+        select:
+          options:
+            - label: Canadian
+              value: "Canadian"
+            - label: Clueless
+              value: "Clueless"
+            - label: Country Bumpkin
+              value: "Country Bumpkin"
+            - label: Grumpy Old Man
+              value: "Grumpy Old Man"
+            - label: Hippie
+              value: "Hippie"
+            - label: Hipster
+              value: "Hipster"
+            - label: Intellectual
+              value: "Intellectual"
+            - label: Karen
+              value: "Karen"
+            - label: Hyperbole
+              value: "Hyperbole"
+            - label: Musician
+              value: "Musician"
+            - label: Normal
+              value: "Normal"
+            - label: Old English
+              value: "Old English"
+            - label: Paranoid
+              value: "Paranoid"
+            - label: Pirate
+              value: "Pirate"
+            - label: Redneck
+              value: "Redneck"
+            - label: Scientist
+              value: "Scientist"
+            - label: Stoner
+              value: "Stoner"
+            - label: Superhero
+              value: "Superhero"
+            - label: Valley Girl
+              value: "Valley Girl"
+ask_openai_secondary:
+  name: Ask OpenAI for Song Info (Secondary)
+  description: Get Song Details in different flavors from OpenAI
+  fields:
+    song_title:
+      name: Song Title
+      description: Song Title
+      example: "Seven Nation Army"
+      required: false
+      selector: 
+        text:
+    song_artist:
+      name: Song Artist
+      description: Song Artist
+      example: "The White Stripes"
+      required: false
+      selector: 
+        text:
+    prompt:
+      name: Prompt
+      description: Prompt
+      example: "General Song Info"
+      required: false
+      selector:
+        select:
+          options:
+            - label: General Song Info
+              value: "General Song Info"
+            - label: Artist Info
+              value: "Artist Info"
             - label: Lyric Meanings
               value: "Lyric Meanings"
             - label: Recording Info
