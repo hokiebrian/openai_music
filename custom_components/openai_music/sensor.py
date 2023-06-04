@@ -203,7 +203,7 @@ class OpenAiTextSensorSecondary(Entity):
         ai_personality_name = call_data["personality"]
         song_info = f"{song_title} by {song_artist}"
 
-        text_session = aiohttp.ClientSession()
+        text_session_secondary = aiohttp.ClientSession()
 
         config_options = self.config.options
         temperature = config_options.get("temperature", DEFAULT_TEMPERATURE)
@@ -230,7 +230,7 @@ class OpenAiTextSensorSecondary(Entity):
 
         _LOGGER.debug(messages)
 
-        openai.aiosession.set(text_session)
+        openai.aiosession.set(text_session_secondary)
 
         while retry_count < max_retry_attempts:
             try:
@@ -273,7 +273,7 @@ class OpenAiTextSensorSecondary(Entity):
                 }
                 self._state = f"Error: {str(err)}"[:254]
 
-        await openai.aiosession.get(text_session).close()
+        await openai.aiosession.get(text_session_secondary).close()
         elapsed_time = time.time() - start_time
         self._attributes["elapsed_time"] = round(elapsed_time, 2)
         self.async_write_ha_state()
