@@ -198,6 +198,10 @@ get_openai_image:
           options:
             - label: Abstract Expressionist
               value: "Abstract Expressionist"
+            - label: Absurd
+              value: "Absurd"
+            - label: Absurd Cartoon
+              value: "Absurd Cartoon"
             - label: Album Cover
               value: "Album Cover"
             - label: Andy Warhol
