@@ -49,8 +49,8 @@ PROMPTS = {
 }
 IMAGE_TYPES = {
     "Abstract Expressionist": "abstract expressionist",
-    "Absurd": "absurdist photo",
-    "Absurd Cartoon": "absurdist cartoon",
+    "Absurd": "ridiculous absurdist photo",
+    "Absurd Cartoon": "ridiculous absurdist cartoon",
     "Album Cover": "album cover",
     "Andy Warhol": "Andy Warhol",
     "Anime": "anime",
