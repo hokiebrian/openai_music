@@ -18,6 +18,7 @@ from .const import (
     DEFAULT_MAX_IMG_TOKENS,
     DEFAULT_TEMPERATURE,
     DEFAULT_IMG_TEMPERATURE,
+    DEFAULT_IMG_COUNT,
     DEFAULT_IMAGE_TYPE,
     DEFAULT_IMAGE_RESOLUTION,
     ERROR_IMG,
@@ -340,6 +341,7 @@ class OpenAiImageSensor(Entity):
         config_options = self.config.options
         temperature = config_options.get("img_temperature", DEFAULT_IMG_TEMPERATURE)
         max_tokens = config_options.get("max_tokens", DEFAULT_MAX_IMG_TOKENS)
+        img_count = config_options.get("img_count", DEFAULT_IMG_COUNT)
         model = config_options.get("chat_model", DEFAULT_CHAT_MODEL)
         user_tag = config_options.get("user_tag", DEFAULT_USER_TAG)
         size = config_options.get("img_resolution", DEFAULT_IMAGE_RESOLUTION)
@@ -389,18 +391,19 @@ class OpenAiImageSensor(Entity):
 
                 openai.aiosession.set(img_session)
                 data_img = await openai.Image.acreate(
-                    prompt=prompt, size=size, user=user_tag
+                    prompt=prompt, size=size, user=user_tag, n=img_count
                 )
 
                 _LOGGER.debug(data_img)
 
-                image_data = data_img["data"][0]["url"]
+                image_data = data_img["data"]
                 ai_request_time = data_img["created"]
 
                 self._attributes = {
                     "song": song_info,
                     "type": image_type_name,
                     "image": image_data,
+                    "image_count": img_count,
                     "fetched": ai_request_time,
                     "desc": song_data,
                     "tokens": token_count_img,
@@ -416,7 +419,8 @@ class OpenAiImageSensor(Entity):
                 self._attributes = {
                     "song": song_info,
                     "type": image_type_name,
-                    "image": ERROR_IMG,
+                    "image": [{"url": ERROR_IMG}],
+                    "image_count": 1,
                     "fetched": int(time.time()),
                     "desc": str(err),
                     "tokens": token_count_img,

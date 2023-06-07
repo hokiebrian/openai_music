@@ -103,6 +103,7 @@ class PersonalitySelectEntity(SelectEntity):
             self._state = option
             self.async_write_ha_state()
 
+
 class PersonalitySelectEntitySecondary(SelectEntity):
     """Select OpenAI Personality."""
 
@@ -129,6 +130,7 @@ class PersonalitySelectEntitySecondary(SelectEntity):
         if option in self._attr_options:
             self._state = option
             self.async_write_ha_state()
+
 
 class ImageSelectEntity(SelectEntity):
     """Select Image Creation Profile."""

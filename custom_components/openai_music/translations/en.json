@@ -24,7 +24,8 @@
                 "max_tokens": "Max Tokens (Range 100-1000, default: 500)",
                 "chat_model": "Chat Model (Default: gpt-3.5-turbo)",
                 "img_resolution": "Image Resolution (Default: 1024x1024)",
-                "user_tag": "User Tag used for OpenAI Requests"
+                "user_tag": "User Tag used for OpenAI Requests",
+                "img_count": "Number of simultaneous images to create $$$"
               },
                 "description": "Configure OpenAI Options"
             }
