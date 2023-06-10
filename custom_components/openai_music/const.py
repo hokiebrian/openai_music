@@ -1,9 +1,9 @@
 """Constants for the OpenAI Music Companion"""
 
 DOMAIN = "openai_music"
-DEFAULT_PROMPT = "Give me general info about the song"
+DEFAULT_PROMPT = "Give me general info about the song ignore references to remastering"
 DEFAULT_PERSONALITY = "Answer like a music expert"
-DEFAULT_SONG_TITLE = "One"
+DEFAULT_SONG_TITLE = "Enter Sandman"
 DEFAULT_SONG_ARTIST = "Metallica"
 DEFAULT_CHAT_MODEL = "gpt-3.5-turbo"
 DEFAULT_USER_TAG = "HomeAssistant"
@@ -14,8 +14,8 @@ DEFAULT_IMG_TEMPERATURE = 0.2
 DEFAULT_TOP_P = 1.0
 DEFAULT_IMG_TOP_P = 1.0
 DEFAULT_IMG_COUNT = 1
-DEFAULT_IMAGE_TYPE = "normal"
-DEFAULT_IMAGE_RESOLUTION = "1024x1024"
+DEFAULT_IMAGE_TYPE = "Normal"
+DEFAULT_IMAGE_RESOLUTION = "256x256"
 ERROR_IMG = "https://brands.home-assistant.io/openai_music/icon@2x.png"
 MAX_RETRIES = 2
 PERSONALITIES = {
@@ -40,10 +40,10 @@ PERSONALITIES = {
     "Redneck": "Answer like an very angry redneck",
 }
 PROMPTS = {
-    "General Song Info": "Give me general info about the song",
+    "General Song Info": "Give me general info about the song ignore references to remastering",
     "Artist Info": "Tell me about the artist only, nothing about the song",
     "Lyric Meanings": "How are the lyrics generally interpreted for",
-    "Song Trivia": "Tell me some trivia about the song",
+    "Song Trivia": "Tell me some trivia about the song ignore references to remastering",
     "Songwriters": "Who wrote the song",
     "Recording info": "When and where was this song recorded:",
     "Similar Songs": "What are 20 songs similar to",
@@ -54,19 +54,31 @@ IMAGE_TYPES = {
     "Absurd Cartoon": "ridiculous absurdist cartoon",
     "Album Cover": "album cover",
     "Andy Warhol": "Andy Warhol",
-    "Anime": "anime",
+    "Anime": "modern anime",
     "Antebellum": "Antebellum",
+    "Avant-garde": "Avant-garde",
+    "Baroque": "baroque",
     "Black and White": "black and white photograph",
     "Cartoon": "cartoon",
     "Collage": "collage",
     "Comic Book": "comic book cover",
-    "Cyberpunk": "cyberpunk style",
+    "Constructivism": "constructivism",
+    "Cyberpunk": "cyberpunk",
     "Depressive": "contemporary depressive realism",
+    "Digital Art": "digital art",
+    "Dragon Art": "dragon art",
+    "Fantasy": "fantasy art",
     "Futurism": "futurism",
+    "Geometric": "geometric",
     "Gothic": "gothic",
+    "Graffiti": "graffiti art",
+    "Harlem Renaissance": "Harlem renaissance",
     "Hyperrealism": "hyperrealism",
     "Humorous": "humorous",
     "Landscape": "non-cartoon natural landscape",
+    "Line Art": "line art",
+    "Lofi": "lofi",
+    "Marble Art": "marble art",
     "Metaphysical": "metaphysical",
     "Minimalism": "minimalism",
     "Modern": "modern",
@@ -75,15 +87,22 @@ IMAGE_TYPES = {
     "Old Cartoon": "old timey cartoon",
     "Oil Painting": "oil paining",
     "Pablo Picasso": "Pablo Picasso",
+    "Painterly": "painterly",
     "Pastel": "bright pastel colors",
-    "Photographic": "photographic",
+    "Performance Art": "performance art",
+    "Photographic": "realistic photographic",
     "Photorealism": "photorealism",
+    "Pointillist": "pointillist",
     "Pop Surrealism": "pop surrealism",
     "Psychedelic": "psychedelic",
+    "Retro": "retro aesthetic",
+    "Romantic": "romantic",
     "Salvador Dalí": "Salvador Dalí",
+    "Stained Glass": "stained glass",
     "Steampunk": "steampunk",
     "Still Life": "still life",
     "Tim Burton": "Tim Burton",
+    "Urban": "urban",
     "Van Gogh": "Van Gogh",
     "Vintage": "vintage sepia toned photograph",
     "Watercolors": "watercolors",

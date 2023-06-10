@@ -197,81 +197,118 @@ get_openai_image:
         select:
           options:
             - label: Abstract Expressionist
-              value: "Abstract Expressionist"
+              value: "abstract expressionist"
             - label: Absurd
-              value: "Absurd"
+              value: "ridiculous absurdist photo"
             - label: Absurd Cartoon
-              value: "Absurd Cartoon"
+              value: "ridiculous absurdist cartoon"
             - label: Album Cover
-              value: "Album Cover"
+              value: "album cover"
             - label: Andy Warhol
               value: "Andy Warhol"
             - label: Anime
-              value: "Anime"
+              value: "modern anime"
             - label: Antebellum
               value: "Antebellum"
+            - label: Avant-garde
+              value: "Avant-garde"
+            - label: Baroque
+              value: "baroque"
             - label: Black and White
-              value: "Black and White"
+              value: "black and white photograph"
             - label: Cartoon
-              value: "Cartoon"
+              value: "cartoon"
             - label: Collage
-              value: "Collage"
+              value: "collage"
             - label: Comic Book
-              value: "Comic Book"
+              value: "comic book cover"
+            - label: Constructivism
+              value: "constructivism"
             - label: Cyberpunk
-              value: "Cyberpunk"
+              value: "cyberpunk"
             - label: Depressive
-              value: "Depressive"
+              value: "contemporary depressive realism"
+            - label: Digital Art
+              value: "digital art"
+            - label: Dragon Art
+              value: "dragon art"
+            - label: Fantasy
+              value: "fantasy art"
             - label: Futurism
-              value: "Futurism"
+              value: "futurism"
+            - label: Geometric
+              value: "geometric"
             - label: Gothic
-              value: "Gothic"
+              value: "gothic"
+            - label: Graffiti
+              value: "graffiti art"
+            - label: Harlem Renaissance
+              value: "Harlem renaissance"
             - label: Hyperrealism
-              value: "Hyperrealism"
+              value: "hyperrealism"
             - label: Humorous
-              value: "Humorous"
+              value: "humorous"
             - label: Landscape
-              value: "Landscape"
+              value: "non-cartoon natural landscape"
+            - label: Line Art
+              value: "line art"
+            - label: Lofi
+              value: "lofi"
+            - label: Marble Art
+              value: "marble art"
             - label: Metaphysical
-              value: "Metaphysical"
+              value: "metaphysical"
             - label: Minimalism
-              value: "Minimalism"
+              value: "minimalism"
             - label: Modern
-              value: "Modern"
+              value: "modern"
             - label: Neon
-              value: "Neon"
+              value: "neon colors"
             - label: Normal
-              value: "Normal"
+              value: "Typical"
             - label: Old Cartoon
-              value: "Old Cartoon"
+              value: "old timey cartoon"
             - label: Oil Painting
-              value: "Oil Painting"
+              value: "oil painting"
             - label: Pablo Picasso
               value: "Pablo Picasso"
+            - label: Painterly
+              value: "painterly"
             - label: Pastel
-              value: "Pastel"
+              value: "bright pastel colors"
+            - label: Performance Art
+              value: "performance art"
             - label: Photographic
-              value: "Photographic"             
+              value: "realistic photographic"
             - label: Photorealism
-              value: "Photorealism"
+              value: "photorealism"
+            - label: Pointillist
+              value: "pointillist"
             - label: Pop Surrealism
-              value: "Pop Surrealism"
+              value: "pop surrealism"
             - label: Psychedelic
-              value: "Psychedelic"
+              value: "psychedelic"
+            - label: Retro
+              value: "retro aesthetic"
+            - label: Romantic
+              value: "romantic"
             - label: Salvador Dalí
               value: "Salvador Dalí"
+            - label: Stained Glass
+              value: "stained glass"
             - label: Steampunk
-              value: "Steampunk"
+              value: "steampunk"
             - label: Still Life
-              value: "Still Life"
+              value: "still life"
             - label: Tim Burton
               value: "Tim Burton"
+            - label: Urban
+              value: "urban"
             - label: Van Gogh
               value: "Van Gogh"
             - label: Vintage
-              value: "Vintage"
+              value: "vintage sepia toned photograph"
             - label: Watercolors
-              value: "Watercolors"
+              value: "watercolors"
             - label: Whimsical
-              value: "Whimdsical"
-
+              value: "whimsical"
