@@ -26,6 +26,7 @@ from .const import (
     PERSONALITIES,
     PROMPTS,
     IMAGE_TYPES,
+    IMAGE_PROMPT,
 )
 
 
@@ -99,7 +100,7 @@ class OpenAiTextSensor(Entity):
 
         messages = [
             {"role": "system", "content": ai_personality},
-            {"role": "user", "content": f"{ai_prompt} {song_info}"},
+            {"role": "user", "content": f"{ai_prompt} Song: {song_info}"},
         ]
 
         _LOGGER.debug(messages)
@@ -226,7 +227,7 @@ class OpenAiTextSensorSecondary(Entity):
 
         messages = [
             {"role": "system", "content": ai_personality},
-            {"role": "user", "content": f"{ai_prompt} {song_info}"},
+            {"role": "user", "content": f"{ai_prompt} Song: {song_info}"},
         ]
 
         _LOGGER.debug(messages)
@@ -328,6 +329,7 @@ class OpenAiImageSensor(Entity):
         max_retry_attempts = MAX_RETRIES
         retry_count = 0
         token_count_img = 0
+        ai_prompt = IMAGE_PROMPT
 
         img_session = aiohttp.ClientSession()
 
@@ -353,14 +355,6 @@ class OpenAiImageSensor(Entity):
         image_type_name = call_data.get("image_type", DEFAULT_IMAGE_TYPE)
 
         _LOGGER.debug(song_info)
-
-        ai_prompt = (
-            "Create a prompt in 3 sentences or less for "
-            "a detailed Style image for the Song that would provide an "
-            "intepretation of the lyrics. "
-            "Provide only descriptive text emphasizing detail, style and lyrical themes. "
-            "Don't use the word create. Speak in the present tense."
-        )
 
         messages = [
             {"role": "system", "content": ai_prompt},
