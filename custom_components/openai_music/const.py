@@ -20,27 +20,27 @@ DEFAULT_IMAGE_TYPE = "Normal"
 DEFAULT_IMAGE_RESOLUTION = "256x256"
 ERROR_IMG = "https://brands.home-assistant.io/openai_music/icon@2x.png"
 MAX_RETRIES = 2
-IMAGE_PROMPT = "In three sentences or less, bring to life an image that encapsulates the style and essence of the song [Song], interpreted through the lens of [Style]. Ensure that no textual elements, such as words or symbols, are included in the image. Convey the song's underlying lyrical themes without directly mentioning lyrics or typography. Your description should be detailed, vivid, and framed in the present tense."
+IMAGE_PROMPT = "Using detailed imagery in a [Style] style, describe an image in three concise sentences (approximately 12-15 words each) that encapsulates the meaning and essence of [Song]. Through visual elements alone, convey the story, emotions, and themes portrayed in the song. Your description should be vivid, evocative, and framed in the present tense, allowing the viewer to connect with the song's meaning without relying on any textual elements or lyrics."
 PERSONALITIES = {
-    "Normal": "Answer like a Music Journalist giving an overview of a song",
-    "Hipster": "Answer like an indie music-loving hipster critiquing a popular music trend",
-    "Stoner": "Answer like a laid-back stoner expressing deep love for a particular song",
-    "Musician": "Answer like a professional musician explaining intricate musical compositions",
-    "Grumpy Old Man": "Answer like a grumpy old man reminiscing about the 'good old days' of music",
-    "Intellectual": "Answer like an intellectual dissecting the philosophical themes in music",
-    "Pirate": "Answer like a pirate who discovered a trove of music records",
-    "Scientist": "Answer like a scientist explaining the physics of sound in music",
+    "Canadian": "Answer like a proud Canadian, celebrating Canada's contributions to music",
     "Clueless": "Answer like someone humorously misunderstanding the world of music",
+    "Country Bumpkin": "Answer like a country folk, fondly discussing country music",
+    "Grumpy Old Man": "Answer like a grumpy old man reminiscing about the 'good old days' of music",
+    "Hipster": "Answer like an indie music-loving hipster critiquing a popular music trend",
+    "Hippie": "Answer like a free-spirited hippie, talking about the power of music to unite people",
+    "Hyperbole": "Answer like someone expressing a love for music in wild exaggeration",
+    "Intellectual": "Answer like an intellectual dissecting the philosophical themes in music",
+    "Karen": "Answer like a Karen, critiquing modern music trends",
+    "Musician": "Answer like a professional musician explaining intricate musical compositions",
+    "Normal": "Answer like a Music Journalist giving an overview of a song",
     "Old English": "Answer like an Old English speaker praising the music of the bard",
+    "Paranoid": "Answer like a conspiracy theorist, unearthing hidden messages in song lyrics",
+    "Pirate": "Answer like a pirate who discovered a trove of music records",
+    "Redneck": "Answer like a fiery redneck, passionately debating about country versus rock music",
+    "Scientist": "Answer like a scientist explaining the physics of sound in music",
+    "Stoner": "Answer like a laid-back stoner expressing deep love for a particular song",
     "Superhero": "Answer like a superhero who draws inspiration and power from music",
     "Valley Girl": "Answer like a Valley Girl, discussing music with infectious enthusiasm",
-    "Karen": "Answer like a Karen, critiquing modern music trends",
-    "Paranoid": "Answer like a conspiracy theorist, unearthing hidden messages in song lyrics",
-    "Canadian": "Answer like a proud Canadian, celebrating Canada's contributions to music",
-    "Hyperbole": "Answer like someone expressing a love for music in wild exaggeration",
-    "Country Bumpkin": "Answer like a country folk, fondly discussing country music",
-    "Hippie": "Answer like a free-spirited hippie, talking about the power of music to unite people",
-    "Redneck": "Answer like a fiery redneck, passionately debating about country versus rock music",
 }
 PROMPTS = {
     "General Song Info": "Provide a broad overview of the [Song], excluding any mentions of remastering.",

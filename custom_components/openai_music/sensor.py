@@ -401,6 +401,7 @@ class OpenAiImageSensor(Entity):
                     "fetched": ai_request_time,
                     "desc": song_data,
                     "tokens": token_count_img,
+                    "messages": messages,
                 }
 
                 self._state = f"{song_info} - {ai_request_time} - {image_type_name}"
