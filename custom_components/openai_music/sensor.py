@@ -99,7 +99,10 @@ class OpenAiTextSensor(Entity):
             ai_personality = f"Answer as a {call_data.get('personality')}"
 
         messages = [
-            {"role": "system", "content": ai_personality},
+            {
+                "role": "system",
+                "content": f"{ai_personality} in {max_tokens*.75} words or less.",
+            },
             {"role": "user", "content": f"{ai_prompt} Song: {song_info}"},
         ]
 
@@ -226,7 +229,10 @@ class OpenAiTextSensorSecondary(Entity):
             ai_personality = f"Answer as a {call_data.get('personality')}"
 
         messages = [
-            {"role": "system", "content": ai_personality},
+            {
+                "role": "system",
+                "content": f"{ai_personality} in {max_tokens*.75} words or less.",
+            },
             {"role": "user", "content": f"{ai_prompt} Song: {song_info}"},
         ]
 
