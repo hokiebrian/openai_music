@@ -101,7 +101,7 @@ class OpenAiTextSensor(Entity):
         messages = [
             {
                 "role": "system",
-                "content": f"{ai_personality} in {max_tokens*.75} words or less.",
+                "content": ai_personality,
             },
             {"role": "user", "content": f"{ai_prompt} Song: {song_info}"},
         ]
@@ -231,7 +231,7 @@ class OpenAiTextSensorSecondary(Entity):
         messages = [
             {
                 "role": "system",
-                "content": f"{ai_personality} in {max_tokens*.75} words or less.",
+                "content": ai_personality,
             },
             {"role": "user", "content": f"{ai_prompt} Song: {song_info}"},
         ]
