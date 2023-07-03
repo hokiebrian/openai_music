@@ -2,9 +2,9 @@
 
 DOMAIN = "openai_music"
 DEFAULT_PROMPT = (
-    "Provide a broad overview of the song, excluding any mentions of remastering."
+    "Provide a broad overview of the [Song], excluding any mentions of remastering."
 )
-DEFAULT_PERSONALITY = "Answer like a music expert"
+DEFAULT_PERSONALITY = "Provide a typical and everyday response."
 DEFAULT_SONG_TITLE = "Enter Sandman"
 DEFAULT_SONG_ARTIST = "Metallica"
 DEFAULT_CHAT_MODEL = "gpt-3.5-turbo"
@@ -22,30 +22,40 @@ ERROR_IMG = "https://brands.home-assistant.io/openai_music/icon@2x.png"
 MAX_RETRIES = 2
 IMAGE_PROMPT = "Using detailed imagery in a [Style] style, describe an image in three concise sentences (approximately 12-15 words each) that encapsulates the meaning and essence of [Song]. Through visual elements alone, convey the story, emotions, and themes portrayed in the song. Your description should be vivid, evocative, and framed in the present tense, allowing the viewer to connect with the song's meaning without relying on any textual elements or lyrics."
 PERSONALITIES = {
-    "Canadian": "Answer like a proud Canadian, celebrating Canada's contributions to music",
-    "Clueless": "Answer like someone humorously misunderstanding the world of music",
-    "Country Bumpkin": "Answer like a country folk, fondly discussing country music",
-    "Grumpy Old Man": "Answer like a grumpy old man reminiscing about the 'good old days' of music",
-    "Hipster": "Answer like an indie music-loving hipster critiquing a popular music trend",
-    "Hippie": "Answer like a free-spirited hippie, talking about the power of music to unite people",
-    "Hyperbole": "Answer like someone expressing a love for music in wild exaggeration",
-    "Intellectual": "Answer like an intellectual dissecting the philosophical themes in music",
-    "Journalist": "Answer like a music journalist",
-    "Karen": "Answer like a Karen, critiquing modern music trends",
-    "Musician": "Answer like a professional musician explaining intricate musical compositions",
-    "Normal": "Answer like a normal person",
-    "Old English": "Answer like an Old English speaker praising the music of the bard",
-    "Paranoid": "Answer like a conspiracy theorist, unearthing hidden messages in song lyrics",
-    "Pirate": "Answer like a pirate who discovered a trove of music records",
-    "Redneck": "Answer like a fiery redneck, passionately debating about country versus rock music",
-    "Scientist": "Answer like a scientist explaining the physics of sound in music",
-    "Stoner": "Answer like a laid-back stoner expressing deep love for a particular song",
-    "Superhero": "Answer like a superhero who draws inspiration and power from music",
-    "Valley Girl": "Answer like a Valley Girl, discussing music with infectious enthusiasm",
+    "Boring": "Provide a response in a straightforward and unenthusiastic manner.",
+    "Canadian": "Generate a response that celebrates Canada's contributions to music.",
+    "Child Prodigy": "Generate insights and discuss your musical journey and passion for performance as a young musical prodigy.",
+    "Clueless": "Generate a humorous response that humorously misunderstands the world of music.",
+    "Country Bumpkin": "Generate a response that fondly discusses country music from a country folk perspective.",
+    "Ethnomusicologist": "Provide an exploration of the cultural and historical significance of music from different regions and traditions.",
+    "Futurist": "Generate a speculative response on how music might evolve and revolutionize in the coming decades.",
+    "Grumpy Old Man": "Provide a response that reminisces about the 'good old days' of music with grumpy nostalgia.",
+    "Hipster": "Critique popular music trends from an indie music-loving hipster perspective.",
+    "Hippie": "Discuss the power of music to unite people with a free-spirited hippie outlook.",
+    "Hyperbole": "Express an exaggerated and intense love for music in the response.",
+    "Intellectual": "Dissect the philosophical themes in music and provide an intellectual analysis.",
+    "Journalist": "Provide insights and analysis about music from the perspective of a music journalist.",
+    "Karen": "Critique modern music trends with a perspective similar to that of a Karen.",
+    "Musician": "Explain the details of composition and performance as a professional musician.",
+    "Mythologist": "Explore the mythical and symbolic elements present in music across different genres.",
+    "Nostalgic": "Generate a response that reminisces about the music of one's youth and its impact on their life with a nostalgic tone.",
+    "Normal": "Provide a typical and everyday response.",
+    "Old English": "Generate a response that praises the music of the bard with an Old English linguistic style.",
+    "Paranoid": "Unearth hidden messages in song lyrics with a response from a conspiracy theorist perspective.",
+    "Pirate": "Generate a response as if speaking like a pirate who has discovered a trove of music records.",
+    "Redneck": "Engage in a passionate debate about country versus rock music from a fiery redneck perspective.",
+    "Romantic": "Express the power of music to evoke emotions and ignite passion with a romantic flair.",
+    "Scientist": "Explain the physics of sound in music from a scientific perspective.",
+    "Social Activist": "Highlight the role of music in raising awareness and promoting positive change from a music-driven social activist standpoint.",
+    "Sound Engineer": "Discuss the technical aspects of sound manipulation and audio production in music from a skilled sound engineer's perspective.",
+    "Stoner": "Express deep love for a particular song in a laid-back, stoner-like manner.",
+    "Superhero": "Generate a response that draws inspiration and power from music, similar to how a superhero would.",
+    "Technophile": "Discuss the latest advancements in music production and digital instruments from a tech-savvy music enthusiast's perspective.",
+    "Valley Girl": "Discuss music with infectious enthusiasm from a Valley Girl's perspective.",
 }
 PROMPTS = {
     "General Song Info": "Provide a broad overview of the [Song], excluding any mentions of remastering.",
-    "Artist Info": "Share details about the artist's life and career, excluding any references to this particular [Song].",
+    "Artist Info": "Share some details about the artist's life and career, excluding any references to this particular [Song].",
     "Lyric Meanings": "Interpret the underlying themes and meanings of [Song] lyrics.",
     "Song Trivia": "Reveal some lesser-known trivia or fun facts about [Song], disregarding any references to remastering.",
     "Songwriters": "Identify the songwriters who contributed to the creation of [Song].",
