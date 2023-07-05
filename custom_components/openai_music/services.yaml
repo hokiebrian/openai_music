@@ -46,6 +46,8 @@ ask_openai:
       selector:
         select:
           options:
+            - label: Boring
+              value: "Boring"
             - label: Canadian
               value: "Canadian"
             - label: Clueless
@@ -60,14 +62,20 @@ ask_openai:
               value: "Hipster"
             - label: Intellectual
               value: "Intellectual"
+            - label: Journalist
+              value: "Journalist"
             - label: Karen
               value: "Karen"
             - label: Hyperbole
               value: "Hyperbole"
             - label: Musician
               value: "Musician"
+            - label: Mythologist
+              value: "Mythologist"
             - label: Normal
               value: "Normal"
+            - label: Nostalgic
+              value: "Nostalgic"
             - label: Old English
               value: "Old English"
             - label: Paranoid
@@ -76,6 +84,8 @@ ask_openai:
               value: "Pirate"
             - label: Redneck
               value: "Redneck"
+            - label: Romantic
+              value: "Romantic"
             - label: Scientist
               value: "Scientist"
             - label: Stoner
@@ -132,6 +142,8 @@ ask_openai_secondary:
       selector:
         select:
           options:
+            - label: Boring
+              value: "Boring"
             - label: Canadian
               value: "Canadian"
             - label: Clueless
@@ -146,14 +158,20 @@ ask_openai_secondary:
               value: "Hipster"
             - label: Intellectual
               value: "Intellectual"
+            - label: Journalist
+              value: "Journalist"
             - label: Karen
               value: "Karen"
             - label: Hyperbole
               value: "Hyperbole"
             - label: Musician
               value: "Musician"
+            - label: Mythologist
+              value: "Mythologist"
             - label: Normal
               value: "Normal"
+            - label: Nostalgic
+              value: "Nostalgic"
             - label: Old English
               value: "Old English"
             - label: Paranoid
@@ -162,6 +180,8 @@ ask_openai_secondary:
               value: "Pirate"
             - label: Redneck
               value: "Redneck"
+            - label: Romantic
+              value: "Romantic"
             - label: Scientist
               value: "Scientist"
             - label: Stoner
@@ -252,6 +272,8 @@ get_openai_image:
               value: "non-cartoon natural landscape"
             - label: Line Art
               value: "line art"
+            - label: Literal
+              value: "literal"
             - label: Lofi
               value: "lofi"
             - label: Marble Art
