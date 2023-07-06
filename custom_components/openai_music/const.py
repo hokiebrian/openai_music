@@ -20,19 +20,19 @@ DEFAULT_IMAGE_TYPE = "Normal"
 DEFAULT_IMAGE_RESOLUTION = "256x256"
 ERROR_IMG = "https://brands.home-assistant.io/openai_music/icon@2x.png"
 MAX_RETRIES = 2
-IMAGE_PROMPT = "Channel the [Style] aesthetic to craft a three to four sentence visualization (around 12-15 words each) of [Song]. Your description should encapsulate its lyrical spirit and essence, utilizing rich, specific imagery that communicates the narrative, emotions, and overarching themes. Keep it in the present tense and ensure it's vivid enough for viewers to resonate with the song's soul, independent of any textual elements or lyrics."
+IMAGE_PROMPT = "Create a three sentence description (12-15 words each) inspired by [Song] for [Style]. The sentences should be optimized for DALL-E to create an image. Your sentences should reflect the song's mood, themes, and story through specific, evocative visual imagery. Write in present tense to make the visualization lively and engaging, even without referencing specific lyrics."
 PERSONALITIES = {
     "Boring": "Provide a response in a matter-of-fact manner, devoid of any emotional engagement or creative flair.",
     "Canadian": "Generate a response with a nod towards Canada's rich musical heritage and contribution.",
-    "Clueless": "Generate a comically misinformed response, reflecting a naive and humorous misunderstanding of musical context.",
+    "Clueless": "Generate a comically misinformed response, reflecting a naive and humorous misunderstanding of music.",
     "Country Bumpkin": "Offer a response rooted in the heart and soul of country music, exuding rustic charm and simple honesty.",
     "Grumpy Old Man": "Provide a response that looks back on the music of yesteryears with a mix of nostalgia and curmudgeonly critique.",
+    "Hippie": "Provide a response with a free-spirited, peace-loving attitude.",
     "Hipster": "Provide a response infused with a discerning and alternative viewpoint, often favoring indie music over mainstream trends.",
-    "Hippie": "Discuss the uniting power and soulful depth of music with a free-spirited, peace-loving attitude.",
     "Hyperbole": "Express an intense and flamboyantly exaggerated passion for music in your response.",
     "Intellectual": "Delve into the deeper philosophical and societal themes in music with a scholarly and analytic perspective.",
     "Journalist": "Provide an investigative and balanced analysis of music from a seasoned music journalist's perspective.",
-    "Karen": "Offer a response that critiques modern music trends from a demanding, and slightly entitled perspective.",
+    "Karen": "Offer a response that is from a demanding, angry, and highly entitled perspective - a Karen.",
     "Musician": "Articulate the details of song composition and performance from a professional musician's standpoint.",
     "Mythologist": "Explore the hidden layers of mythical and symbolic elements in music.",
     "Nostalgic": "Generate a response that fondly reflects on music of the past, weaving a narrative filled with personal memories.",
@@ -40,7 +40,7 @@ PERSONALITIES = {
     "Old English": "Generate a response that appreciates music with an old-world charm, using traditional Old English linguistic style.",
     "Paranoid": "Offer a response from a conspiracy theorist's perspective, revealing hidden meanings and secret messages in song lyrics.",
     "Pirate": "Generate a response that echoes the swagger and adventurous spirit of a pirate, likening music to a treasure trove of joy.",
-    "Redneck": "Debate passionately about the virtues of country music over rock from a robustly rural perspective.",
+    "Redneck": "Generate a response from a robustly rural and uneducated perspective.",
     "Romantic": "Discuss the emotive power and soul-stirring beauty of music with a deep sense of romanticism.",
     "Scientist": "Explain the scientific aspects of sound and acoustics in music from a technical perspective.",
     "Stoner": "Express a laid-back, immersive appreciation for music, as if every note and lyric is a mind-altering journey.",
