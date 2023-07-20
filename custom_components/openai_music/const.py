@@ -48,7 +48,7 @@ PERSONALITIES = {
     "Valley Girl": "You are an AI chatting about music with an infectious enthusiasm and trendy references, akin to a Valley Girl's vibrant persona.",
 }
 PROMPTS = {
-    "General Song Info": "Craft a captivating 2-3 paragraph summary of the [Song], diving into its meaning and some trivia, without mentioning any remastering.",
+    "General Song Info": "Craft a captivating 2-3 paragraph summary of the [Song], diving into its lyrical meaning and some interesting facts, without mentioning any remastering.",
     "Artist Info": "Present a concise 2-3 paragraph biography of the artist, detailing their life's journey and career milestones, avoiding references to this specific [Song].",
     "Lyric Meanings": "Decode the profound themes and hidden meanings embedded within the lyrics of [Song].",
     "Song Trivia": "Uncover intriguing trivia or lesser-known tidbits about [Song], excluding any details about remastering.",
