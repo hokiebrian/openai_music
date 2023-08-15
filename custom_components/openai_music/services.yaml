@@ -322,6 +322,8 @@ get_openai_image:
               value: "steampunk"
             - label: Still Life
               value: "still life"
+            - label: Tilt-Shift
+              value: "Tilt-Shift"
             - label: Tim Burton
               value: "Tim Burton"
             - label: Urban

@@ -20,7 +20,7 @@ DEFAULT_IMAGE_TYPE = "Normal"
 DEFAULT_IMAGE_RESOLUTION = "256x256"
 ERROR_IMG = "https://brands.home-assistant.io/openai_music/icon@2x.png"
 MAX_RETRIES = 2
-IMAGE_PROMPT = "In the style of [Style], create a three-sentence (12-15 words each) paragraph inspired by [Song]. The sentences should be optimized for DALL-E to create an image that reflects the song's mood, themes, and story through specific, evocative visual imagery. The imagery should align with the style. Write in present tense to make the visualization lively and engaging, even without referencing specific lyrics."
+IMAGE_PROMPT = "In the style of [Style], create a 30-50 word prompt inspired by [Song]. The prompt should be optimized for and will be provided directly to DALL-E to create a singular image that reflects the song's mood, themes, and story through specific, evocative visual imagery. The imagery should align with the style. Write in present tense to make the visualization lively and engaging, even without referencing specific lyrics."
 PERSONALITIES = {
     "Boring": "You are an assistant that provides responses in a matter-of-fact manner, devoid of any emotional engagement or creative flair.",
     "Canadian": "You are an AI with a Canadian twist, emphasizing Canada's rich musical heritage and contribution.",
@@ -48,7 +48,7 @@ PERSONALITIES = {
     "Valley Girl": "You are an AI chatting about music with an infectious enthusiasm and trendy references, akin to a Valley Girl's vibrant persona.",
 }
 PROMPTS = {
-    "General Song Info": "Craft a captivating 2-3 paragraph summary of the [Song], diving into its lyrical meaning and some interesting facts, without mentioning any remastering.",
+    "General Song Info": "Capture the essence of the [Song] by crafting a concise, engaging 2-3 paragraph overview. Dive into the song's core lyrical themes and offer intriguing insights, all while avoiding any reference to remastering. The goal is to create a summary that captivates and informs the reader about the song's significance.",
     "Artist Info": "Present a concise 2-3 paragraph biography of the artist, detailing their life's journey and career milestones, avoiding references to this specific [Song].",
     "Lyric Meanings": "Decode the profound themes and hidden meanings embedded within the lyrics of [Song].",
     "Song Trivia": "Uncover intriguing trivia or lesser-known tidbits about [Song], excluding any details about remastering.",
@@ -110,6 +110,7 @@ IMAGE_TYPES = {
     "Stained Glass": "An image echoing stained glass, using bold outlines and vibrant colors.",
     "Steampunk": "A steampunk image, weaving together Victorian aesthetics and futuristic technology.",
     "Still Life": "A still life image, capturing the serene beauty of inanimate objects.",
+    "Tilt-Shift": "A image in the style of a tilt-shift photograph",
     "Tim Burton": "An image inspired by Tim Burton's signature style, characterized by a whimsical twist, gothic elements, and eccentric characters.",
     "Urban": "An urban image against a backdrop of city life, with its stark contrasts and pulsating energy.",
     "Van Gogh": "An image channeling Van Gogh's signature style, with emotional honesty, distinct brushstrokes, and bold colors.",
