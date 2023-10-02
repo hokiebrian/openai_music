@@ -1,0 +1,34 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Integration is already configured"
+        },
+        "error": {
+          "invalid_api_key": "Invalid API Key"
+        },
+        "step": {
+            "user": {
+              "title": "Enter your OpenAI API Key",
+              "data": {
+                "api_key": "API Key"
+              }
+            }
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+              "data": {
+                "temperature": "Temperature (Range 0-2, default: 0.5)",
+                "img_temperature": "Image Temperature (Range 0-2, default: 0.2)",
+                "max_tokens": "Max Tokens (Range 100-1000, default: 500)",
+                "chat_model": "Chat Model (Default: gpt-3.5-turbo)",
+                "img_resolution": "Image Resolution (Default: 1024x1024)",
+                "user_tag": "User Tag used for OpenAI Requests",
+                "img_count": "Number of simultaneous images to create $$$"
+              },
+                "description": "Configure OpenAI Options"
+            }
+        }
+    }
+}
