@@ -20,7 +20,7 @@ DEFAULT_IMAGE_TYPE = "Normal"
 DEFAULT_IMAGE_RESOLUTION = "256x256"
 ERROR_IMG = "https://brands.home-assistant.io/openai_music/icon@2x.png"
 MAX_RETRIES = 2
-IMAGE_PROMPT = "In the style of [Style], create a 30-50 word prompt inspired by [Song]. The prompt should be optimized for and will be provided directly to DALL-E to create a singular image that reflects the song's interpretation through specific, evocative visual imagery. The imagery should align with the style. Write in present tense to make the visualization lively and engaging, even without referencing specific lyrics. Do not use any text in the image."
+IMAGE_PROMPT = "Inspired by [Song] and in the style of [Style], you are to create a reasonably brief prompt that is optimized for and will be provided directly to DALL-E and should be in a format that conveys to create a singular image that reflects the song's meaning and interpretation through specific, evocative visual imagery. The imagery should align with the style. Write in present tense to make the visualization lively and engaging, even without referencing specific lyrics. Do not use any text in the image."
 PERSONALITIES = {
     "Boring": "Provide responses in a matter-of-fact manner, devoid of any emotional engagement or creative flair.",
     "Canadian": "Speak with a Canadian twist, emphasizing Canada's mannerisms and way of speaking.",

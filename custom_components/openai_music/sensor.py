@@ -364,7 +364,7 @@ class OpenAiImageSensor(Entity):
 
         messages = [
             {"role": "system", "content": ai_prompt},
-            {"role": "user", "content": f"Song: {song_info}, Style: {image_type}"},
+            {"role": "user", "content": f"SONG: {song_info}, STYLE: {image_type}"},
         ]
 
         _LOGGER.debug(messages)
