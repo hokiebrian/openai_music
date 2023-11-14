@@ -7,14 +7,14 @@ ask_openai:
       description: Song Title
       example: "Seven Nation Army"
       required: false
-      selector: 
+      selector:
         text:
     song_artist:
       name: Song Artist
       description: Song Artist
       example: "The White Stripes"
       required: false
-      selector: 
+      selector:
         text:
     prompt:
       name: Prompt
@@ -103,14 +103,14 @@ ask_openai_secondary:
       description: Song Title
       example: "Seven Nation Army"
       required: false
-      selector: 
+      selector:
         text:
     song_artist:
       name: Song Artist
       description: Song Artist
       example: "The White Stripes"
       required: false
-      selector: 
+      selector:
         text:
     prompt:
       name: Prompt
@@ -199,14 +199,14 @@ get_openai_image:
       description: Song Title
       example: "Freebird"
       required: false
-      selector: 
+      selector:
         text:
     song_artist:
       name: Song Artist
       description: Song Artist
       example: "Lynyrd Skynyrd"
       required: false
-      selector: 
+      selector:
         text:
     image_type:
       name: Image Type
@@ -236,6 +236,8 @@ get_openai_image:
               value: "baroque"
             - label: Black and White
               value: "black and white photograph"
+            - label: British Cartoon
+              value: "british cartoon"
             - label: Cartoon
               value: "cartoon"
             - label: Collage
@@ -250,10 +252,14 @@ get_openai_image:
               value: "contemporary depressive realism"
             - label: Digital Art
               value: "digital art"
+            - label: Dogs
+              value: "dogs"
             - label: Dragon Art
               value: "dragon art"
             - label: Fantasy
               value: "fantasy art"
+            - label: Fun
+              value: "fun"
             - label: Futurism
               value: "futurism"
             - label: Geometric
@@ -322,6 +328,8 @@ get_openai_image:
               value: "steampunk"
             - label: Still Life
               value: "still life"
+            - label: Thought Provoking
+              value: "thought provoking"
             - label: Tilt-Shift
               value: "Tilt-Shift"
             - label: Tim Burton

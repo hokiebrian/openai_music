@@ -2,6 +2,7 @@
 
 import logging
 import time
+import asyncio
 import openai
 import aiohttp
 from openai import error
@@ -15,12 +16,15 @@ from .const import (
     DEFAULT_CHAT_MODEL,
     DEFAULT_USER_TAG,
     DEFAULT_MAX_TOKENS,
-    DEFAULT_MAX_IMG_TOKENS,
+    #    DEFAULT_MAX_IMG_TOKENS,
     DEFAULT_TEMPERATURE,
-    DEFAULT_IMG_TEMPERATURE,
+    #    DEFAULT_IMG_TEMPERATURE,
     DEFAULT_IMG_COUNT,
     DEFAULT_IMAGE_TYPE,
     DEFAULT_IMAGE_RESOLUTION,
+    DEFAULT_IMAGE_QUALITY,
+    DEFAULT_IMAGE_STYLE,
+    DEFAULT_IMAGE_MODEL,
     ERROR_IMG,
     MAX_RETRIES,
     PERSONALITIES,
@@ -347,12 +351,14 @@ class OpenAiImageSensor(Entity):
 
         # Get Integration Options or use defaults
         config_options = self.config.options
-        temperature = config_options.get("img_temperature", DEFAULT_IMG_TEMPERATURE)
-        max_tokens = config_options.get("max_tokens", DEFAULT_MAX_IMG_TOKENS)
+        #        temperature = config_options.get("img_temperature", DEFAULT_IMG_TEMPERATURE)
+        #        max_tokens = config_options.get("max_tokens", DEFAULT_MAX_IMG_TOKENS)
         img_count = config_options.get("img_count", DEFAULT_IMG_COUNT)
-        model = config_options.get("chat_model", DEFAULT_CHAT_MODEL)
         user_tag = config_options.get("user_tag", DEFAULT_USER_TAG)
         size = config_options.get("img_resolution", DEFAULT_IMAGE_RESOLUTION)
+        img_quality = config_options.get("img_quality", DEFAULT_IMAGE_QUALITY)
+        img_style = config_options.get("img_style", DEFAULT_IMAGE_STYLE)
+        img_model = config_options.get("img_model", DEFAULT_IMAGE_MODEL)
 
         image_type = (
             self._get_from_config(call_data, "image_type", IMAGE_TYPES)
@@ -362,47 +368,53 @@ class OpenAiImageSensor(Entity):
 
         _LOGGER.debug(song_info)
 
-        messages = [
-            {"role": "system", "content": ai_prompt},
-            {"role": "user", "content": f"SONG: {song_info}, STYLE: {image_type}"},
-        ]
+        messages = f"{ai_prompt} SONG: {song_info}, STYLE: {image_type}"
 
         _LOGGER.debug(messages)
 
         openai.aiosession.set(img_session)
 
-        # Retry if error. It's possible the safety system will flag it multiple times
         while retry_count < max_retry_attempts:
             try:
-                data = await openai.ChatCompletion.acreate(
-                    model=model,
-                    messages=messages,
-                    max_tokens=max_tokens,
-                    temperature=temperature,
-                    user=user_tag,
-                )
+                song_data = "song data"
+                token_count_img = 0
 
-                _LOGGER.debug(data)
-
-                song_data = data["choices"][0]["message"]["content"].strip()
-                token_count_img = data["usage"]["total_tokens"]
-
-                prompt = song_data
+                prompt = messages
+                image_data_list = []
 
                 openai.aiosession.set(img_session)
-                data_img = await openai.Image.acreate(
-                    prompt=prompt, size=size, user=user_tag, n=img_count
-                )
 
-                _LOGGER.debug(data_img)
+                tasks = [
+                    openai.Image.acreate(
+                        prompt=prompt,
+                        model=img_model,
+                        n=1,
+                        quality=img_quality,
+                        size=size,
+                        style=img_style,
+                        user=user_tag,
+                    )
+                    for _ in range(img_count)
+                ]
 
-                image_data = data_img["data"]
-                ai_request_time = data_img["created"]
+                responses = await asyncio.gather(*tasks)
+
+                for data_img in responses:
+                    for image_info in data_img["data"]:
+                        image_with_time = {
+                            "revised_prompt": image_info["revised_prompt"],
+                            "url": image_info["url"],
+                            "ai_request_time": data_img["created"],
+                        }
+                        image_data_list.append(image_with_time)
+                    _LOGGER.debug(data_img)
+
+                ai_request_time = responses[-1]["created"] if responses else None
 
                 self._attributes = {
                     "song": song_info,
                     "type": image_type_name,
-                    "image": image_data,
+                    "image": image_data_list,
                     "image_count": img_count,
                     "fetched": ai_request_time,
                     "desc": song_data,
@@ -420,11 +432,16 @@ class OpenAiImageSensor(Entity):
                 self._attributes = {
                     "song": song_info,
                     "type": image_type_name,
-                    "image": [{"url": ERROR_IMG}],
+                    "image": [
+                        {"url": ERROR_IMG},
+                        {"revised_prompt": err},
+                        {"ai_request_time": ai_request_time},
+                    ],
                     "image_count": 1,
                     "fetched": int(time.time()),
                     "desc": str(err),
                     "tokens": token_count_img,
+                    "messages": messages,
                 }
                 self._state = "ERROR"
 

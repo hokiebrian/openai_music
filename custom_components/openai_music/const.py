@@ -17,10 +17,13 @@ DEFAULT_TOP_P = 1.0
 DEFAULT_IMG_TOP_P = 1.0
 DEFAULT_IMG_COUNT = 1
 DEFAULT_IMAGE_TYPE = "Normal"
-DEFAULT_IMAGE_RESOLUTION = "256x256"
+DEFAULT_IMAGE_RESOLUTION = "1024x1024"
+DEFAULT_IMAGE_MODEL = "dall-e-2"
+DEFAULT_IMAGE_QUALITY = "standard"
+DEFAULT_IMAGE_STYLE = "vivid"
 ERROR_IMG = "https://brands.home-assistant.io/openai_music/icon@2x.png"
 MAX_RETRIES = 2
-IMAGE_PROMPT = "Inspired by [Song] and in the style of [Style], you are to create a reasonably brief prompt that is optimized for and will be provided directly to DALL-E and should be in a format that conveys to create a singular image that reflects the song's meaning and interpretation through specific, evocative visual imagery. The imagery should align with the style. Write in present tense to make the visualization lively and engaging, even without referencing specific lyrics. Do not use any text in the image."
+IMAGE_PROMPT = "Inspired by [Song] and in the style of [Style], you are to create a reasonably brief prompt of about 50 words that is optimized for and will be provided directly to DALL-E and should be in a format that conveys to create a singular image that reflects the song's meaning and interpretation through specific, evocative visual imagery. The imagery should align with the style. Write in present tense to make the visualization lively and engaging, even without referencing specific lyrics. Do not use any text in the image."
 PERSONALITIES = {
     "Boring": "Provide responses in a matter-of-fact manner, devoid of any emotional engagement or creative flair.",
     "Canadian": "Speak with a Canadian twist, emphasizing Canada's mannerisms and way of speaking.",
@@ -67,6 +70,7 @@ IMAGE_TYPES = {
     "Avant-garde": "An avant-garde image that shatters convention, embracing groundbreaking and unconventional artistic techniques.",
     "Baroque": "An image exuding the drama and grandeur of the Baroque era, teeming with intricate details and dynamic compositions.",
     "Black and White": "A monochromatic image with a focus on contrast, shadows, and texture.",
+    "British Cartoon": "An image in the style of Pink Floyd The Wall and old British style cartoons.",
     "Cartoon": "A lively cartoon image, typified by simplified shapes, bold outlines, and bright colors.",
     "Collage": "A diverse collage, harmoniously assembled from disparate elements.",
     "Comic Book": "An image with comic book flair, showcasing bold lines, dynamic action, and vibrant hues.",
@@ -74,8 +78,10 @@ IMAGE_TYPES = {
     "Cyberpunk": "A Cyberpunk-themed image, integrating dystopian elements and futuristic technology.",
     "Depressive": "An image steeped in the tones of depressive realism, spotlighting stark scenes and raw emotional themes.",
     "Digital Art": "A distinctive digital art piece that is unique with the flexibility of the medium.",
+    "Dogs": "An image that uses dogs in place of humans",
     "Dragon Art": "An image set in the realm of dragon art with mythical creatures dominating the skies.",
     "Fantasy": "A fantastical image where magic rules and mythical creatures abound.",
+    "Fun": "An image that is fun and lighthearted",
     "Futurism": "An image tinged with Futurism, amalgamating speed, technology, youth, and radical change into a visual symphony.",
     "Geometric": "A geometric image, employing simple shapes and lines.",
     "Gothic": "A Gothic image, mirroring themes of darkness, romanticism, and intricate beauty.",
@@ -110,6 +116,7 @@ IMAGE_TYPES = {
     "Stained Glass": "An image echoing stained glass, using bold outlines and vibrant colors.",
     "Steampunk": "A steampunk image, weaving together Victorian aesthetics and futuristic technology.",
     "Still Life": "A still life image, capturing the serene beauty of inanimate objects.",
+    "Thought Provoking": "An image that invokes thought and self-reflection",
     "Tilt-Shift": "A image in the style of a tilt-shift photograph as realistic as possible.",
     "Tim Burton": "An image inspired by Tim Burton's signature style, characterized by a whimsical twist, gothic elements, and eccentric characters.",
     "Urban": "An urban image against a backdrop of city life, with its stark contrasts and pulsating energy.",

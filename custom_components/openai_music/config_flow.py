@@ -10,6 +10,9 @@ from .const import (
     DEFAULT_CHAT_MODEL,
     DEFAULT_MAX_TOKENS,
     DEFAULT_IMAGE_RESOLUTION,
+    DEFAULT_IMAGE_MODEL,
+    DEFAULT_IMAGE_QUALITY,
+    DEFAULT_IMAGE_STYLE,
     DEFAULT_IMG_TEMPERATURE,
     DEFAULT_IMG_COUNT,
     DEFAULT_USER_TAG,
@@ -108,6 +111,11 @@ class OpenAIMusicOptionsFlow(config_entries.OptionsFlow):
         )
         user_tag = self.config_entry.options.get("user_tag", DEFAULT_USER_TAG)
         img_count = self.config_entry.options.get("img_count", DEFAULT_IMG_COUNT)
+        img_model = self.config_entry.options.get("img_model", DEFAULT_IMAGE_MODEL)
+        img_quality = self.config_entry.options.get(
+            "img_quality", DEFAULT_IMAGE_QUALITY
+        )
+        img_style = self.config_entry.options.get("img_style", DEFAULT_IMAGE_STYLE)
 
         return self.async_show_form(
             step_id="init",
@@ -125,8 +133,17 @@ class OpenAIMusicOptionsFlow(config_entries.OptionsFlow):
                     vol.Optional("chat_model", default=chat_model): vol.In(
                         ["gpt-3.5-turbo", "gpt-4"]
                     ),
+                    vol.Optional("img_model", default=img_model): vol.In(
+                        ["dall-e-2", "dall-e-3"]
+                    ),
                     vol.Optional("img_resolution", default=img_resolution): vol.In(
-                        ["1024x1024", "512x512", "256x256"]
+                        ["1024x1024", "1792x1024", "1024x1792"]
+                    ),
+                    vol.Optional("img_quality", default=img_quality): vol.In(
+                        ["standard", "hd"]
+                    ),
+                    vol.Optional("img_style", default=img_style): vol.In(
+                        ["vivid", "natural"]
                     ),
                     vol.Optional("user_tag", default=user_tag): str,
                     vol.Optional("img_count", default=img_count): vol.All(
