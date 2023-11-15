@@ -16,9 +16,7 @@ from .const import (
     DEFAULT_CHAT_MODEL,
     DEFAULT_USER_TAG,
     DEFAULT_MAX_TOKENS,
-    #    DEFAULT_MAX_IMG_TOKENS,
     DEFAULT_TEMPERATURE,
-    #    DEFAULT_IMG_TEMPERATURE,
     DEFAULT_IMG_COUNT,
     DEFAULT_IMAGE_TYPE,
     DEFAULT_IMAGE_RESOLUTION,
@@ -81,6 +79,7 @@ class OpenAiTextSensor(Entity):
         song_artist = call_data.get("song_artist", DEFAULT_SONG_ARTIST)
         ai_personality_name = call_data["personality"]
         song_info = f"{song_title} by {song_artist}"
+        ai_request_time = 0
 
         text_session = aiohttp.ClientSession()
 
@@ -351,8 +350,6 @@ class OpenAiImageSensor(Entity):
 
         # Get Integration Options or use defaults
         config_options = self.config.options
-        #        temperature = config_options.get("img_temperature", DEFAULT_IMG_TEMPERATURE)
-        #        max_tokens = config_options.get("max_tokens", DEFAULT_MAX_IMG_TOKENS)
         img_count = config_options.get("img_count", DEFAULT_IMG_COUNT)
         user_tag = config_options.get("user_tag", DEFAULT_USER_TAG)
         size = config_options.get("img_resolution", DEFAULT_IMAGE_RESOLUTION)
@@ -376,7 +373,7 @@ class OpenAiImageSensor(Entity):
 
         while retry_count < max_retry_attempts:
             try:
-                song_data = "song data"
+                song_data = f"SONG: {song_info}, STYLE: {image_type}"
                 token_count_img = 0
 
                 prompt = messages
