@@ -5,7 +5,7 @@ import time
 import asyncio
 import openai
 import aiohttp
-from openai import error
+#from openai import error
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import Entity
 from homeassistant.const import CONF_API_KEY
@@ -396,17 +396,31 @@ class OpenAiImageSensor(Entity):
 
                 responses = await asyncio.gather(*tasks)
 
+                image_data_list = []
+                img_count = 0  # Initialize counter for successful cases
+
                 for data_img in responses:
+                    # Check if data_img is valid and has 'created' field
+                    if not data_img or "created" not in data_img:
+                        _LOGGER.warning("Empty or invalid data_img found in responses.")
+                        continue  # Skip this iteration if data_img is empty or invalid
+
+                    ai_request_time = data_img["created"]
                     for image_info in data_img["data"]:
                         image_with_time = {
                             "revised_prompt": image_info["revised_prompt"],
                             "url": image_info["url"],
-                            "ai_request_time": data_img["created"],
+                            "ai_request_time": ai_request_time,
                         }
                         image_data_list.append(image_with_time)
-                    _LOGGER.debug(data_img)
 
-                ai_request_time = responses[-1]["created"] if responses else None
+                    img_count += 1  # Increment counter for each successful entry
+                    _LOGGER.error(data_img)
+
+                # Safely get 'created' time from the last response
+                ai_request_time = (
+                    responses[-1].get("created", None) if responses else None
+                )
 
                 self._attributes = {
                     "song": song_info,
@@ -426,17 +440,21 @@ class OpenAiImageSensor(Entity):
                 _LOGGER.error("There was an Error: %s - %s", song_info, str(err))
                 _LOGGER.debug(ai_prompt)
                 retry_count += 1
+                ai_request_time = 0
+                err_message = str(err)  # Convert the error message to a string
                 self._attributes = {
                     "song": song_info,
                     "type": image_type_name,
                     "image": [
                         {"url": ERROR_IMG},
-                        {"revised_prompt": err},
+                        {
+                            "revised_prompt": err_message
+                        },  # Store the error message as a string
                         {"ai_request_time": ai_request_time},
                     ],
                     "image_count": 1,
                     "fetched": int(time.time()),
-                    "desc": str(err),
+                    "desc": err_message,  # Store the error description as a string
                     "tokens": token_count_img,
                     "messages": messages,
                 }

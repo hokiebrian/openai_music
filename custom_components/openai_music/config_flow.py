@@ -1,7 +1,7 @@
 """ Config Flow for OpenAI Music Companion """
 import openai
 import voluptuous as vol
-from openai import error
+#from openai import error
 from homeassistant import config_entries
 from homeassistant.helpers import config_validation as cv
 from .const import (
